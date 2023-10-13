@@ -1,4 +1,4 @@
-public class area {
+public class Area {
     //attributes
     private int tiles[][];
     //methods

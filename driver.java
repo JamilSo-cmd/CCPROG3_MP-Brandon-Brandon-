@@ -23,7 +23,7 @@ public class driver {
         //player picks a starter
         switch (input){
             case 1: user.addToInventory(new Creature("Strawander","Fire","A",1,15));
-                    user.setActiveCreature();
+                    user.setActiveCreature(0);
             case 2: ;
             case 3: ;
             default:;

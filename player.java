@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
     //attributes
-    private Inventory playerInv;
+    private Inventory playerInv;    
     private Creature activeCreature;    
     private int[][] playerPos;
     //methods
@@ -12,15 +12,15 @@ public class Player {
 
     }
 
-    public void setActiveCreature (){
+    public void setActiveCreature (int index){
 
-
-
+        this.activeCreature = playerInv.getCreature(index);
+        
     }
     
     public void addToInventory(Creature newCreature){
 
-            this.playerInv.addToInventory(newCreature);
+        this.playerInv.addToInventory(newCreature);
 
     }
 

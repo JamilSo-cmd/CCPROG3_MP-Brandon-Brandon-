@@ -11,6 +11,15 @@ public class Inventory {
 
     }
 
+    public Creature getCreature(int index){
+        
+        Creature targetCreature;
+
+        targetCreature = roster.get(index);
+
+        return targetCreature;
+    }
+
     public void addToInventory(Creature newCreature){
 
         roster.add(newCreature);

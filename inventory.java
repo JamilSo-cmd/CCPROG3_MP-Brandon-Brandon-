@@ -23,7 +23,24 @@ public class Inventory {
     public void addToInventory(Creature newCreature){
 
         roster.add(newCreature);
+        
+    }
+
+    public void viewInventory(){
+        int i;
+        Creature targetCreature;
+
+        for (i = 0; i < roster.size() ; i++){
+
+            targetCreature = roster.get(i);
+            System.out.println("\nName: " + targetCreature.getName() +
+                                "\nType: " + targetCreature.getType() +
+                                "\nFamily: " + targetCreature.getFamily() +
+                                "\nEvolution Lv: " + targetCreature.getEvolutionLv());
+
+        }
 
     }
+
 }
     

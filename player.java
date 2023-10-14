@@ -24,5 +24,12 @@ public class Player {
 
     }
 
+    public void viewInventory (){
+
+        playerInv.viewInventory();
+        
+        System.out.println("Current Active Creature: " + activeCreature.getName());
+
+    }
 }
     

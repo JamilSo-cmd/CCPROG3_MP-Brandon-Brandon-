@@ -6,6 +6,8 @@
  * 
  */
 
+import java.util.Random;
+
 public class Creature {
     //attributes
     private String name;
@@ -38,5 +40,13 @@ public class Creature {
         return evolutionLv;
     }
 
+    
+    public int attack (){
+        Random rand = new Random();
+        int max = 10, min = 1;
 
+        int dmgValue = rand.nextInt(max - min + 1) + min;
+
+        return dmgValue;
+    }
 }

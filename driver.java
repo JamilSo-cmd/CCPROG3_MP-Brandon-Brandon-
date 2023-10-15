@@ -74,7 +74,30 @@ public class driver {
                     input = 0;
                 }
                 break;
-                case 2: ;
+                case 2: {
+                   //program asks user to choose an area to explore which is referred to as level 
+                   System.out.println("Enter the level (1, 2, or 3): ");
+                   int level = scanner.nextInt();
+
+                   Area area = new Area(level);
+
+                   printMap(area);
+    
+
+                   public static void printMap(Area area) {
+                      int rows = area.getRows();
+                      int columns = area.getColumns();
+                      int[][] tiles = area.getTiles();
+
+                   for (int y = 0; y < rows; y++) {
+                      for (int x = 0; x < columns; x++) {
+                         int tile = tiles[y][x];
+                         System.out.print(tile + " ");
+                         }
+                      System.out.println();
+                      }
+                   }
+                }
                 break;
                 case 3: ;
                 break;

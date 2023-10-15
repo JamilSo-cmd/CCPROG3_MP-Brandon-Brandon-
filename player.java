@@ -5,7 +5,7 @@
  * @version 1.0
  * 
  */
-
+import java.util.Random;
 import java.util.ArrayList;
 
 public class Player {
@@ -24,6 +24,17 @@ public class Player {
 
         this.activeCreature = playerInv.getCreature(index);
         
+    }
+
+    public int catchCreature (){
+
+        Random rand = new Random();
+        int max = 100, min = 1;
+        // For enemy catch Rate int catchRate = (40+50) - Enemy.getHP();
+        
+        int catchValue = rand.nextInt(max - min + 1) + min;
+        
+        return catchValue;
     }
     
     public void addToInventory(Creature newCreature){

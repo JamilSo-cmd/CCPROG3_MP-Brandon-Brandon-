@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author Brandon Jaramillo Anthony  
+ * @author Brandon Jamil So
+ * @version 1.0
+ * 
+ */
 
 public class Area {
     private int rows;

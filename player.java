@@ -1,3 +1,11 @@
+/**
+ * 
+ * @author Brandon Jaramillo Anthony  
+ * @author Brandon Jamil So
+ * @version 1.0
+ * 
+ */
+
 import java.util.ArrayList;
 
 public class Player {

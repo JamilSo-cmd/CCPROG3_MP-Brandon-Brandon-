@@ -1,4 +1,12 @@
-import java.util.ArrayList;
+/**
+ * 
+ * @author Brandon Jaramillo Anthony  
+ * @author Brandon Jamil So
+ * @version 1.0
+ * 
+ */
+
+ import java.util.ArrayList;
 
 public class Inventory {
     //attributes

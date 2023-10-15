@@ -77,7 +77,7 @@ public class driver {
                 case 2: {
                    //program asks user to choose an area to explore which is referred to as level 
                    System.out.println("Enter the level (1, 2, or 3): ");
-                   int level = scanner.nextInt();
+                   int level = scan.nextInt();
 
                    Area area = new Area(level);
 
@@ -99,9 +99,12 @@ public class driver {
                    }
                 }
                 break;
+
                 case 3: ;
                 break;
+
                 case 4: ;
+
                 default:;
             }
         }

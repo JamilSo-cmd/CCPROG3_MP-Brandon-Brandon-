@@ -1,3 +1,4 @@
+
 /**
  * <B>Area of the program<B>
  * @author Brandon Jaramillo Anthony  
@@ -8,64 +9,68 @@
 import java.util.ArrayList;
 
 public class Area {
-    //attributes
+    // attributes
 
     /**
-     * Contains the number of rows 
-     * */
+     * Contains the number of rows
+     */
     private int rows;
     /**
-     * Contains the number of columns 
-     * */
+     * Contains the number of columns
+     */
     private int columns;
     /**
-     * Contains the number of tiles present 
-     * */
+     * Contains the number of tiles present
+     */
     private int[][] tiles;
     /**
-     * Contains the list of creatures 
-     * */
+     * Contains the list of creatures
+     */
     private ArrayList<Creature> creaturesList;
 
-    //methods
+    // methods
     /**
      * sets the number of rows, columns and list of creatures based on the area
+     * 
      * @param rows
-     * represents amount of rows in area
+     *                     represents amount of rows in area
      * @param column
-     * represents amount of columns in area
+     *                     represents amount of columns in area
      * @param creatureList
-     * represents the creatures that will be encountered in this area
-    */
+     *                     represents the creatures that will be encountered in this
+     *                     area
+     */
     public Area(int level, ArrayList<Creature> creaturelist) {
         if (level == 1) {
             this.rows = 5;
             this.columns = 1;
             this.creaturesList = creaturelist;
             area1();
-        } 
-        //Area 2 and 3
+        }
+        // Area 2 and 3
         /*
-        * else if (level == 2) {
-           * this.rows = 3;
-           * this.columns = 3;
-           * area2();
-           * 
-        * } else if (level == 3) {
-        * this.rows = 4;
-        * this.columns = 4;
-        * area3();
-        * }
-        */
+         * else if (level == 2) {
+         * this.rows = 3;
+         * this.columns = 3;
+         * area2();
+         * 
+         * } else if (level == 3) {
+         * this.rows = 4;
+         * this.columns = 4;
+         * area3();
+         * }
+         */
     }
 
-    /**sets the number of rows and column tiles for area 1
+    /**
+     * sets the number of rows and column tiles for area 1
+     * 
      * @param tiles
-     * represents the size of the area
+     *                represents the size of the area
      * @param rows
-     * reepresents the number of rows
+     *                reepresents the number of rows
      * @param columns
-     * represents the number of columns
+     *                represents the number of columns
      */
     private void area1() {
         this.tiles = new int[rows][columns];
@@ -97,26 +102,32 @@ public class Area {
      * }
      */
 
-    /**gets the number of rows for the area 
+    /**
+     * gets the number of rows for the area
+     * 
      * @return
-     * number of rows
-    */
+     *         number of rows
+     */
     public int getRows() {
         return this.rows;
     }
 
-    /**gets the number of columns for the area
+    /**
+     * gets the number of columns for the area
+     * 
      * @return
-     * number of columns
-    */
+     *         number of columns
+     */
     public int getColumns() {
         return this.columns;
     }
 
-    /**gets the tiles of the area
+    /**
+     * gets the tiles of the area
+     * 
      * @return
-     * amount of tiles
-    */
+     *         amount of tiles
+     */
     public int[][] getTiles() {
         return tiles;
     }

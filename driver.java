@@ -1,5 +1,6 @@
 
 /**
+ * <B>>Driver for program<B>
  * 
  * @author Brandon Jaramillo Anthony  
  * @author Brandon Jamil So
@@ -95,7 +96,7 @@ public class driver {
 
                     Area area = new Area(level, creatureList1);
 
-                    printMap(area,creatureList1);
+                    printMap(area);
         
 
                     public static void printMap(Area area) {

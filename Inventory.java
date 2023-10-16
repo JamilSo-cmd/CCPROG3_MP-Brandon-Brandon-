@@ -1,4 +1,5 @@
 /**
+ * <B>Inventory of the Player<B>
  * 
  * @author Brandon Jaramillo Anthony  
  * @author Brandon Jamil So
@@ -10,15 +11,35 @@
 
 public class Inventory {
     //attributes
+    
+    /**
+     *represents the cratures the player currently owns 
+     */
     private ArrayList<Creature> roster;
     //methods
 
+    /**
+     * creates the array to store creatures
+     * @param roster
+     * represents the player's currently owned creatures
+     */
     public Inventory () {
 
         roster = new ArrayList<Creature>();
 
     }
 
+    /**
+     * gets a creature from the player's inventory
+     * @param roster
+     * represents the creatures the player currently owns
+     * @param targetCreature
+     * represents the creature to be selected
+     * @param index 
+     * represents the number of target creature
+     * @return
+     * the target creature
+     */
     public Creature getCreature(int index){
         
         Creature targetCreature;

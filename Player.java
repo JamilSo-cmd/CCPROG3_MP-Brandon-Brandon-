@@ -1,4 +1,5 @@
 /**
+ * <B>Player object of the program<B>
  * 
  * @author Brandon Jaramillo Anthony  
  * @author Brandon Jamil So
@@ -9,24 +10,50 @@ import java.util.Random;
 
 public class Player {
     //attributes
+
+    /**
+     *represents the player's inventory
+     */
     private Inventory playerInv;    
-    private Creature activeCreature;    
+    /**
+     * represents the player's active creature
+     */
+    private Creature activeCreature;
+    /**
+     * represents the player's current position on the area
+     */    
     private int[][] playerPos;
     //methods
 
-
+    /**
+     * creates the player with obtained inventory
+     * @param playerInv
+     * represents the player's inventory
+     */
     public Player(Inventory playerInv){
 
         this.playerInv = playerInv;
 
     }
 
+     /**
+     * sets a new active creature for the player
+     * @param activeCreature
+     * represent the player's current creature
+     * @param playerInv
+     * represents the player's inventory
+     */
     public void setActiveCreature (int index){
 
         this.activeCreature = playerInv.getCreature(index);
         
     }
 
+    /**
+     * calculates the probility of the player catching a creature
+     * @return
+     * the catch value
+     */
     public int catchCreature (){
 
         Random rand = new Random();
@@ -38,12 +65,24 @@ public class Player {
         return catchValue;
     }
     
+     /**
+     * adds a new creature into the player's inventory
+     * @param playerInv
+     * represents the player's inventory
+     */
     public void addToInventory(Creature newCreature){
 
         this.playerInv.addToInventory(newCreature);
 
     }
 
+    /**
+     * shows the information of each creature in the player's inventory, including the current active creature
+     * @param activeCreature
+     * represent the player's current creature
+     * @param playerInv
+     * represents the player's inventory
+     */
     public void viewInventory (){
 
         playerInv.viewInventory();

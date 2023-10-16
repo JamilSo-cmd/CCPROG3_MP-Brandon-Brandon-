@@ -6,7 +6,8 @@
  * @version 1.0
  * 
  */
-
+import java.sql.Array;
+import java.util.ArrayList; 
 import java.util.Scanner;
 public class driver {
 
@@ -15,6 +16,19 @@ public class driver {
         int input = 0;
         Scanner scan = new Scanner(System.in);
         Player user = new Player(new Inventory());
+        ArrayList<Creature> creatureList1 = new ArrayList<Creature>();
+
+        //adding creatures to list
+        creatureList1.add(new Creature("Strawander", "fire", "A", 1));
+        creatureList1.add(new Creature("Chocowool", "fire", "B", 1));
+        creatureList1.add(new Creature("Parfwit", "fire", "C", 1));
+        creatureList1.add(new Creature("Brownisaur", "grass", "D", 1));
+        creatureList1.add(new Creature("Frubat", "grass", "E", 1));
+        creatureList1.add(new Creature("Malts", "grass", "F", 1));
+        creatureList1.add(new Creature("Squirpie", "water", "G", 1));
+        creatureList1.add(new Creature("Chocolite", "water", "H", 1));
+        creatureList1.add(new Creature("Oshacone", "water", "I", 1));
+
 
         System.out.println( "Greetings " + /*player name*/  ", Pick your starter! \n\n[1] Strawander\n\n[2] Brownisaur\n\n[3] Squirpie\n\nInput: ");
 
@@ -79,9 +93,9 @@ public class driver {
                     System.out.println("Enter the level (1, 2, or 3): ");
                     int level = scan.nextInt();
 
-                    Area area = new Area(level);
+                    Area area = new Area(level, creatureList1);
 
-                    printMap(area);
+                    printMap(area,creatureList1);
         
 
                     public static void printMap(Area area) {

@@ -41,10 +41,11 @@ public class Inventory {
         for (i = 0; i < roster.size() ; i++){
 
             targetCreature = roster.get(i);
-            System.out.println("\nName: " + targetCreature.getName() +
+            System.out.println("\nCreature no: [" + i + "]" +
+                                "\nName: " + targetCreature.getName() +
                                 "\nType: " + targetCreature.getType() +
                                 "\nFamily: " + targetCreature.getFamily() +
-                                "\nEvolution Lv: " + targetCreature.getEvolutionLv());
+                                "\nEvolution Lv: " + targetCreature.getEvolutionLv() + "\n");
 
         }
 

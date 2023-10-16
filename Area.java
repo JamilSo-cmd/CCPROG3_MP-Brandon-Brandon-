@@ -5,16 +5,19 @@
  * @version 1.0
  * 
  */
+import java.util.ArrayList;
 
 public class Area {
     private int rows;
     private int columns;
     private int[][] tiles;
+    private ArrayList<Creature> a1Creatures;
 
-    public Area(int level) {
+    public Area(int level, ArrayList<Creature> creaturelist) {
         if (level == 1) {
             this.rows = 5;
             this.columns = 1;
+            this.a1Creatures = creaturelist;
             area1();
         } /*
            * else if (level == 2) {

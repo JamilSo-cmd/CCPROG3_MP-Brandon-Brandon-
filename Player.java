@@ -6,7 +6,6 @@
  * 
  */
 import java.util.Random;
-import java.util.ArrayList;
 
 public class Player {
     //attributes
@@ -14,6 +13,8 @@ public class Player {
     private Creature activeCreature;    
     private int[][] playerPos;
     //methods
+
+
     public Player(Inventory playerInv){
 
         this.playerInv = playerInv;

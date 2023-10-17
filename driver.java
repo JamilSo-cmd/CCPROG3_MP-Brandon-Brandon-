@@ -56,9 +56,8 @@ public class driver {
                 case 3:
                     user.addToInventory(new Creature("Squirpie", "Water", "G", 1));
                     user.setActiveCreature(0);
-
-                default:
-                    System.out.println("unknown input, try again: ");
+                    break;  
+                default:System.out.println("unknown input, try again: ");
 
             }
         }
@@ -102,6 +101,8 @@ public class driver {
                     // program asks user to choose an area to explore which is referred to as level
                     System.out.println("Enter the level (1, 2, or 3): ");
                     int level = scan.nextInt();
+                    
+                    scan.nextLine();
 
                     Area area = new Area(level, creatureList1);
 
@@ -158,7 +159,6 @@ public class driver {
 
                         System.out.println("[E]EXIT area");
 
-                        scan.nextLine();
                         exploreAction = scan.nextLine();
 
                         if (exploreAction.equals("U")) {

@@ -52,6 +52,14 @@ public class Creature {
         this.evolutionLv = EL;
     }
 
+    /**
+     * lowers the healthpoints of a Creature object by the damage value
+     * 
+     * @param healthPoints
+     * 
+     * @param damage
+     */
+
     public void takeDamage(int damage) {
         this.healthPoints -= damage;
     }
@@ -96,6 +104,12 @@ public class Creature {
         return evolutionLv;
     }
 
+    /**
+     * gets the creature's Health Points
+     * 
+     * @return
+     *         the creature's HP
+     */
     public int getHealthPoints() {
         return healthPoints;
     }
@@ -115,6 +129,18 @@ public class Creature {
         return dmgValue;
     }
 
+    /**
+     * Checks if ally creature has a type advantage over enemy creature
+     * 
+     * @param ally
+     *              represents the creature the player is controlling
+     * 
+     * @param enemy
+     *              represents the creature the player is fighting
+     * 
+     * @return
+     *         boolean flag of whether there is a type advantage or not
+     */
     public boolean typeAdvantage(String ally, String enemy) {
         boolean hasAdvantage = false;
 

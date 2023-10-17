@@ -63,6 +63,16 @@ public class Area {
          */
     }
 
+    /**
+     * gets a randomly chosen wild creature from the creatureList
+     * 
+     * @param creaturesList
+     *                      represents all the creatures that can be encountered in
+     *                      this area
+     * 
+     * @return
+     *         a wild creature
+     */
     public Creature getWildCreature() {
         Random wild = new Random();
         int randomIndex = wild.nextInt(creaturesList.size());

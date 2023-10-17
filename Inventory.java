@@ -1,3 +1,4 @@
+
 /**
  * <B>Inventory of the Player<B>
  * 
@@ -7,23 +8,24 @@
  * 
  */
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class Inventory {
-    //attributes
-    
+    // attributes
+
     /**
-     *represents the cratures the player currently owns 
+     * represents the cratures the player currently owns
      */
     private ArrayList<Creature> roster;
-    //methods
+    // methods
 
     /**
      * creates the array to store creatures
+     * 
      * @param roster
-     * represents the player's currently owned creatures
+     *               represents the player's currently owned creatures
      */
-    public Inventory () {
+    public Inventory() {
 
         roster = new ArrayList<Creature>();
 
@@ -31,17 +33,18 @@ public class Inventory {
 
     /**
      * gets a creature from the player's inventory
+     * 
      * @param roster
-     * represents the creatures the player currently owns
+     *                       represents the creatures the player currently owns
      * @param targetCreature
-     * represents the creature to be selected
-     * @param index 
-     * represents the number of target creature
+     *                       represents the creature to be selected
+     * @param index
+     *                       represents the number of target creature
      * @return
-     * the target creature
+     *         the target creature
      */
-    public Creature getCreature(int index){
-        
+    public Creature getCreature(int index) {
+
         Creature targetCreature;
 
         targetCreature = roster.get(index);
@@ -49,28 +52,38 @@ public class Inventory {
         return targetCreature;
     }
 
-    public void addToInventory(Creature newCreature){
+    /**
+     * Adds a new creature object into the roster
+     * 
+     * @param newCreature
+     */
+    public void addToInventory(Creature newCreature) {
 
         roster.add(newCreature);
-        
+
     }
 
-    public void viewInventory(){
+    /**
+     * Displays all the creatures in the player's inventory
+     * 
+     * @param targetCreature
+     *                       represents the selected creature
+     */
+    public void viewInventory() {
         int i;
         Creature targetCreature;
 
-        for (i = 0; i < roster.size() ; i++){
+        for (i = 0; i < roster.size(); i++) {
 
             targetCreature = roster.get(i);
             System.out.println("\nCreature no: [" + i + "]" +
-                                "\nName: " + targetCreature.getName() +
-                                "\nType: " + targetCreature.getType() +
-                                "\nFamily: " + targetCreature.getFamily() +
-                                "\nEvolution Lv: " + targetCreature.getEvolutionLv() + "\n");
+                    "\nName: " + targetCreature.getName() +
+                    "\nType: " + targetCreature.getType() +
+                    "\nFamily: " + targetCreature.getFamily() +
+                    "\nEvolution Lv: " + targetCreature.getEvolutionLv() + "\n");
 
         }
 
     }
 
 }
-    

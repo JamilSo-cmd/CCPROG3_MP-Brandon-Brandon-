@@ -31,6 +31,8 @@ public class Player {
      * 
      * @param playerInv
      *                  represents the player's inventory
+     * @param playerPos
+     *                  represents the player's position
      */
     public Player(Inventory playerInv) {
 
@@ -52,10 +54,20 @@ public class Player {
 
     }
 
+    /**
+     * Lowers the Y coordinate of the Player Position to move the player up
+     * 
+     * @param playerPos
+     *                  represents the player's position
+     * @return
+     *         boolean flag of whether an encounter occured or not
+     */
     public boolean moveUp() {
         boolean encounter = false;
         int currentY = playerPos[0][1];
-        playerPos[0][1] = currentY - 1; // Decrease the Y-coordinate to move up
+
+        // Decrease the Y-coordinate to move up
+        playerPos[0][1] = currentY - 1;
 
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -67,10 +79,20 @@ public class Player {
         return encounter;
     }
 
+    /**
+     * Raises the Y coordinate of the Player Position to move the player down
+     * 
+     * @param playerPos
+     *                  represents the player's position
+     * @return
+     *         boolean flag of whether an encounter occured or not
+     */
     public boolean moveDown() {
         boolean encounter = false;
         int currentY = playerPos[0][1];
-        playerPos[0][1] = currentY + 1; // Increase the Y-coordinate to move down
+
+        // Increase the Y-coordinate to move down
+        playerPos[0][1] = currentY + 1;
 
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -81,10 +103,20 @@ public class Player {
         return encounter;
     }
 
+    /**
+     * Lowers the X coordinate of the Player Position to move the player left
+     * 
+     * @param playerPos
+     *                  represents the player's position
+     * @return
+     *         boolean flag of whether an encounter occured or not
+     */
     public boolean moveLeft() {
         boolean encounter = false;
         int currentX = playerPos[0][0];
-        playerPos[0][0] = currentX - 1; // Decrease the X-coordinate to move left
+
+        // Decrease the X-coordinate to move left
+        playerPos[0][0] = currentX - 1;
 
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -95,10 +127,20 @@ public class Player {
         return encounter;
     }
 
+    /**
+     * Raises the X coordinate of the Player Position to move the player right
+     * 
+     * @param playerPos
+     *                  represents the player's position
+     * @return
+     *         boolean flag of whether an encounter occured or not
+     */
     public boolean moveRight() {
         boolean encounter = false;
         int currentX = playerPos[0][0];
-        playerPos[0][0] = currentX + 1; // Increase the X-coordinate to move right
+
+        // Increase the X-coordinate to move right
+        playerPos[0][0] = currentX + 1;
 
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -129,7 +171,9 @@ public class Player {
      * adds a new creature into the player's inventory
      * 
      * @param playerInv
-     *                  represents the player's inventory
+     *                    represents the player's inventory
+     * @param newCreature
+     *                    represents the creature to be added
      */
     public void addToInventory(Creature newCreature) {
 
@@ -154,15 +198,33 @@ public class Player {
 
     }
 
+    /**
+     * gets the Player's current position of x and y coordinate
+     * 
+     * @return
+     *         the Player's current position in the area
+     */
     public int[][] getPlayerPos() {
         return playerPos;
     }
 
+    /**
+     * Resets the Player's position to the default (0,0)
+     * 
+     * @param playerPos
+     *                  represents the player's position
+     */
     public void resetPlayerPos() {
         this.playerPos[0][0] = 0;
         this.playerPos[0][1] = 0;
     }
 
+    /**
+     * gets the active creature to be used in an encounter
+     * 
+     * @return
+     *         the active creature
+     */
     public Creature getActiveCreature() {
         return this.activeCreature;
     }

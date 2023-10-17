@@ -150,23 +150,23 @@ public class driver {
 
                         exploreAction = scan.nextLine();
 
-                        if (exploreAction == "U") {
+                        if (exploreAction.equals("U")) {
 
                             encounter = user.moveUp();
 
-                        } else if (exploreAction == "D") {
+                        } else if (exploreAction.equals("D")) {
 
                             encounter = user.moveDown();
 
-                        } else if (exploreAction == "L") {
+                        } else if (exploreAction.equals("L")) {
 
                             encounter = user.moveLeft();
 
-                        } else if (exploreAction == "R") {
+                        } else if (exploreAction.equals("R")) {
 
                             encounter = user.moveRight();
 
-                        } else if (exploreAction == "E") {
+                        } else if (exploreAction.equals("E")) {
 
                             exploring = false;
 
@@ -199,7 +199,7 @@ public class driver {
 
                                 encounterAction = scan.nextLine();
 
-                                if (encounterAction == "A") {
+                                if (encounterAction.equals("A")) {
 
                                     int dmg = activeCreature.attack();
 
@@ -210,7 +210,7 @@ public class driver {
 
                                     wildCreature.takeDamage(dmg);
 
-                                } else if (encounterAction == "S") {
+                                } else if (encounterAction.equals("S")) {
 
                                     int creatureChoice = 0;
 
@@ -219,7 +219,7 @@ public class driver {
                                     input = scan.nextInt();
                                     user.setActiveCreature(creatureChoice);
 
-                                } else if (encounterAction == "C") {
+                                } else if (encounterAction.equals("C")) {
 
                                     int catchRate = (40 + 50) - wildCreature.getHealthPoints();
 

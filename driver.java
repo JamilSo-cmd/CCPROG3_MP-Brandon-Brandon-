@@ -130,19 +130,23 @@ public class driver {
 
                         String exploreAction = "";
 
-                        if (playerPos[0][1] >= 1) {
+                        if (playerPos[0][1] == 0) {
+                        } else {
                             System.out.println("[U]Move UP");
                         }
 
-                        if (playerPos[0][1] < rows) {
+                        if (playerPos[0][1] == rows - 1) {
+                        } else {
                             System.out.println("[D]Move DOWN");
                         }
 
-                        if (playerPos[0][0] >= 1) {
+                        if (playerPos[0][0] == 0) {
+                        } else {
                             System.out.println("[L]Move LEFT");
                         }
 
-                        if (playerPos[0][0] < columns) {
+                        if (playerPos[0][0] == columns - 1) {
+                        } else {
                             System.out.println("[R]Move RIGHT");
                         }
 

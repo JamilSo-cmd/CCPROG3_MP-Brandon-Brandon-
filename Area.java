@@ -7,6 +7,7 @@
  * 
  */
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Area {
     // attributes
@@ -60,6 +61,12 @@ public class Area {
          * area3();
          * }
          */
+    }
+
+    public Creature getWildCreature() {
+        Random wild = new Random();
+        int randomIndex = wild.nextInt(creaturesList.size());
+        return creaturesList.get(randomIndex);
     }
 
     /**

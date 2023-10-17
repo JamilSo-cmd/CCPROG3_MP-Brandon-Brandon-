@@ -7,7 +7,7 @@
  * @version 1.0
  * 
  */
-import java.sql.Array;
+//import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -102,9 +102,11 @@ public class driver {
                     Area area = new Area(level, creatureList1);
 
                     boolean exploring = true;
+                    boolean encounter = false;
 
                     while (exploring) {
-                        // Print the map with the player's position
+                        // Print the area chosen with tiles represented as "0" and include the player's
+                        // position to be represented as "P"
                         int rows = area.getRows();
                         int columns = area.getColumns();
                         int[][] tiles = area.getTiles();
@@ -126,30 +128,142 @@ public class driver {
 
                         System.out.println("What will you do?\n");
 
-                        // Still have to implement print statements that show only the valid movement
-                        // directions which would be in if statements
+                        String exploreAction = "";
 
-                        // if(playerPos[0][0] )
-
-                        System.out.println("[5]Exit area");
-
-                        input = scan.nextInt();
-
-                        if (input == 5) {
-                            exploring = false;
+                        if (playerPos[0][1] >= 1) {
+                            System.out.println("[U]Move UP");
                         }
-                        input = 0;
+
+                        if (playerPos[0][1] < rows) {
+                            System.out.println("[D]Move DOWN");
+                        }
+
+                        if (playerPos[0][0] >= 1) {
+                            System.out.println("[L]Move LEFT");
+                        }
+
+                        if (playerPos[0][0] < columns) {
+                            System.out.println("[R]Move RIGHT");
+                        }
+
+                        System.out.println("[E]EXIT area");
+
+                        exploreAction = scan.nextLine();
+
+                        if (exploreAction == "U") {
+
+                            encounter = user.moveUp();
+
+                        } else if (exploreAction == "D") {
+
+                            encounter = user.moveDown();
+
+                        } else if (exploreAction == "L") {
+
+                            encounter = user.moveLeft();
+
+                        } else if (exploreAction == "R") {
+
+                            encounter = user.moveRight();
+
+                        } else if (exploreAction == "E") {
+
+                            exploring = false;
+
+                        }
+
+                        exploreAction = "";
+
+                        if (encounter) {
+                            Creature activeCreature = user.getActiveCreature();
+                            Creature wildCreature = area.getWildCreature(); // Select a random creature
+                            boolean caught = false;
+                            String encounterAction = "";
+
+                            System.out.println("A wild " + wildCreature.getName() + " appeared!");
+                            System.out.println("This is an evolution level " + wildCreature.getEvolutionLv() + " "
+                                    + wildCreature.getType() + " type of the " + wildCreature.getFamily()
+                                    + " family.\n");
+
+                            for (int actions = 3; actions > 0; actions--) {
+
+                                if (wildCreature.getHealthPoints() != 50) {
+                                    System.out.println("The wild " + wildCreature.getName() + " has "
+                                            + wildCreature.getHealthPoints() + " HP left.\n");
+                                } else {
+                                    System.out.println("The wild " + wildCreature.getName() + " has "
+                                            + wildCreature.getHealthPoints() + "HP.\n");
+                                }
+
+                                System.out.println("[A]ATTACK enemy  [S]SWAP Creatures  [C]CATCH enemy");
+
+                                encounterAction = scan.nextLine();
+
+                                if (encounterAction == "A") {
+
+                                    int dmg = activeCreature.attack();
+
+                                    if (activeCreature.typeAdvantage(activeCreature.getType(),
+                                            wildCreature.getType())) {
+                                        dmg *= 1.5;
+                                    }
+
+                                    wildCreature.takeDamage(dmg);
+
+                                } else if (encounterAction == "S") {
+
+                                    int creatureChoice = 0;
+
+                                    System.out.print("Input creature number: ");
+
+                                    input = scan.nextInt();
+                                    user.setActiveCreature(creatureChoice);
+
+                                } else if (encounterAction == "C") {
+
+                                    int catchRate = (40 + 50) - wildCreature.getHealthPoints();
+
+                                    if (user.catchCreature() >= catchRate) {
+
+                                        caught = true;
+
+                                    } else {
+
+                                        System.out.println("The " + wildCreature.getName() + " was NOT caught.");
+
+                                    }
+                                }
+
+                                if (caught) {
+
+                                    System.out.println("You caught the " + wildCreature.getName() + "!");
+                                    user.addToInventory(wildCreature);
+                                    actions = 0;
+
+                                } else if (wildCreature.getHealthPoints() == 0) {
+
+                                    System.out.println("The wild " + wildCreature.getName() + "fainted.");
+
+                                } else if (actions == 0) {
+
+                                    System.out.println("The wild " + wildCreature.getName() + "ran away.");
+
+                                }
+
+                                encounter = false;
+                            }
+                        }
                     }
                 }
                     break;
-
-                case 3:
-                    ;
-                    break;
-
-                case 4:
-                    ;
-
+                /*
+                 * case 3:
+                 * ;
+                 * break;
+                 * 
+                 * case 4:
+                 * ;
+                 */
                 default:
                     ;
             }

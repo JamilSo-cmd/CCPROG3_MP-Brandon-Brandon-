@@ -158,6 +158,7 @@ public class driver {
 
                         System.out.println("[E]EXIT area");
 
+                        scan.nextLine();
                         exploreAction = scan.nextLine();
 
                         if (exploreAction.equals("U")) {

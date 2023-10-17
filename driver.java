@@ -31,8 +31,12 @@ public class driver {
         creatureList1.add(new Creature("Chocolite", "water", "H", 1));
         creatureList1.add(new Creature("Oshacone", "water", "I", 1));
 
+        System.out.println("What is your name?");
+
+        String userName = scan.nextLine();
+
         System.out.println("Greetings "
-                + /* player name */ ", Pick your starter! \n\n[1] Strawander\n\n[2] Brownisaur\n\n[3] Squirpie\n\nInput: ");
+                + userName + ", Pick your starter! \n\n[1] Strawander\n\n[2] Brownisaur\n\n[3] Squirpie\n\nInput: ");
 
         // player picks a starter
         while (input < 1 || input > 3) {
@@ -103,6 +107,8 @@ public class driver {
 
                     boolean exploring = true;
                     boolean encounter = false;
+
+                    user.resetPlayerPos();
 
                     while (exploring) {
                         // Print the area chosen with tiles represented as "0" and include the player's
@@ -189,6 +195,11 @@ public class driver {
                                     + wildCreature.getType() + " type of the " + wildCreature.getFamily()
                                     + " family.\n");
 
+                            System.out.println("Your active creature is " + activeCreature.getName() + ".");
+                            System.out.println("It is an evolution level " + activeCreature.getEvolutionLv() + " "
+                                    + activeCreature.getType() + " type of the " + activeCreature.getFamily()
+                                    + " family.\n");
+
                             for (int actions = 3; actions > 0; actions--) {
 
                                 if (wildCreature.getHealthPoints() != 50) {
@@ -199,7 +210,7 @@ public class driver {
                                             + wildCreature.getHealthPoints() + "HP.\n");
                                 }
 
-                                System.out.println("[A]ATTACK enemy  [S]SWAP Creatures  [C]CATCH enemy");
+                                System.out.println("[A]ATTACK enemy  [S]SWAP Creatures  [C]CATCH enemy  [R]RUN away");
 
                                 encounterAction = scan.nextLine();
 
@@ -210,6 +221,7 @@ public class driver {
                                     if (activeCreature.typeAdvantage(activeCreature.getType(),
                                             wildCreature.getType())) {
                                         dmg *= 1.5;
+                                        System.out.println("Its super effective!");
                                     }
 
                                     wildCreature.takeDamage(dmg);
@@ -220,7 +232,7 @@ public class driver {
 
                                     System.out.print("Input creature number: ");
 
-                                    input = scan.nextInt();
+                                    creatureChoice = scan.nextInt();
                                     user.setActiveCreature(creatureChoice);
 
                                 } else if (encounterAction.equals("C")) {
@@ -242,6 +254,12 @@ public class driver {
 
                                     System.out.println("You caught the " + wildCreature.getName() + "!");
                                     user.addToInventory(wildCreature);
+                                    System.out.println(wildCreature.getName() + " was added to your inventory.");
+                                    actions = 0;
+
+                                } else if (encounterAction.equals("R")) {
+
+                                    System.out.println("You ran away.");
                                     actions = 0;
 
                                 } else if (wildCreature.getHealthPoints() == 0) {
@@ -257,6 +275,7 @@ public class driver {
                                 encounter = false;
                             }
                         }
+                        input = 0;
                     }
                 }
                     break;

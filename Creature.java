@@ -118,9 +118,9 @@ public class Creature {
     public boolean typeAdvantage(String ally, String enemy) {
         boolean hasAdvantage = false;
 
-        if ((ally == "Fire" && enemy == "grass") ||
-                (ally == "Grass" && enemy == "water") ||
-                (ally == "Water" && enemy == "fire")) {
+        if (((ally == "Fire" || ally == "fire") && enemy == "grass") ||
+                ((ally == "Grass" || ally == "grass") && enemy == "water") ||
+                ((ally == "Water" || ally == "water") && enemy == "fire")) {
             hasAdvantage = true;
         }
 

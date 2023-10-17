@@ -158,6 +158,11 @@ public class Player {
         return playerPos;
     }
 
+    public void resetPlayerPos() {
+        this.playerPos[0][0] = 0;
+        this.playerPos[0][1] = 0;
+    }
+
     public Creature getActiveCreature() {
         return this.activeCreature;
     }

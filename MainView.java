@@ -15,12 +15,14 @@ public class MainView {
 
     private JFrame startFrame;
     private JFrame menuFrame;
+    private JFrame inventoryFrame;
     private JLabel greetingsLbl;
     private JLabel alignmentLbl;
     private Player user;
 
     public MainView(Player user) {
         this.user = user;
+
         this.startFrame = new JFrame("Choose your starter!");
         this.startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.startFrame.setLayout(new FlowLayout());
@@ -38,6 +40,16 @@ public class MainView {
         initializeMenu();
 
         this.menuFrame.setVisible(false);
+
+        this.inventoryFrame = new JFrame("Inventory");
+        this.inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
+        this.inventoryFrame.setLayout(new FlowLayout());
+        this.inventoryFrame.setSize(450, 200);
+
+        initializeInventory();
+
+        this.inventoryFrame.setVisible(false);
+        
     }
 
     private void starterPick (){
@@ -95,30 +107,34 @@ public class MainView {
     }
 
     private void initializeMenu () {
-        JLabel text = new JLabel();
+        JLabel menu = new JLabel();
         JPanel panel = new JPanel(new BorderLayout());
 
-        text.setText("<html><h1>MENU SCREEN</h1></html>");
+        menu.setText("<html><h1>MENU SCREEN</h1></html>");
 
         JButton btn1 = new JButton("View Inventory");
         btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                menuFrame.setVisible(false);
+                //set window for inventory to visible
+                inventoryFrame.setVisible(true); 
             }
         });
         JButton btn2 = new JButton("Explore an Area");
         btn2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                menuFrame.setVisible(false);  
+                //set window for area to visible
             }
         });
         JButton btn3 = new JButton("Evolve a Creature");
         btn3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                menuFrame.setVisible(false);
+                //set window for evolution to visible
             }
         });
 
@@ -137,7 +153,29 @@ public class MainView {
         panel.add(btn3, BorderLayout.WEST);
         panel.add(btn4, BorderLayout.SOUTH);
 
-        this.menuFrame.add(text);
+        this.menuFrame.add(menu);
         this.menuFrame.add(panel);
+    }
+
+    public void initializeInventory (){
+        JLabel text = new JLabel();
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JButton btn4 = new JButton("Exit Program");
+        btn4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuFrame.dispose();
+            }
+        });
+
+        panel.add(btn4, BorderLayout.SOUTH);
+
+        this.alignmentLbl = new JLabel(" ");
+
+        
+
+        this.inventoryFrame.add(text);
+        this.inventoryFrame.add(panel);
     }
 }

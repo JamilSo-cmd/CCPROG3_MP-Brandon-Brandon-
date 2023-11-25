@@ -4,6 +4,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -18,10 +20,9 @@ public class MainView {
     private JFrame inventoryFrame;
     private JLabel greetingsLbl;
     private JLabel alignmentLbl;
-    private Player user;
+    private JPanel starterPanel;
 
-    public MainView(Player user) {
-        this.user = user;
+    public MainView() {
 
         this.startFrame = new JFrame("Choose your starter!");
         this.startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
@@ -64,46 +65,47 @@ public class MainView {
         this.startFrame.add(greetingsPromptLbl);
         this.startFrame.add(greetingsLbl);
 
-        JPanel panel = new JPanel(new BorderLayout());
+        this.starterPanel = new JPanel(new GridLayout(1,3));
         
-        JButton btn1 = new JButton("Fire");
-        btn1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user.addToInventory(new Creature("Strawander", "Fire", "A", 1));
-                user.setActiveCreature(0);  
-                startFrame.dispose();
-                menuFrame.setVisible(true);      
-            }
-        });
-        JButton btn2 = new JButton("Water");
-        btn2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user.addToInventory(new Creature("Brownisaur", "Grass", "D", 1));
-                user.setActiveCreature(0);
-                startFrame.dispose();  
-                menuFrame.setVisible(true);          
-            }
-        });
-        JButton btn3 = new JButton("Grass");
-        btn3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user.addToInventory(new Creature("Squirpie", "Water", "G", 1));
-                user.setActiveCreature(0);
-                startFrame.dispose();     
-                menuFrame.setVisible(true);            
-            }
-        });
+        // JButton btn1 = new JButton("Strawander");
+        // btn1.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // user.addToInventory(new Creature("Strawander", "Fire", "A", 1));
+        //         // user.setActiveCreature(0);  
+        //         System.out.println("check");
+        //         startFrame.dispose();
+        //         menuFrame.setVisible(true);      
+        //     }
+        // });
+        // JButton btn2 = new JButton("Squirpie");
+        // btn2.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // user.addToInventory(new Creature("Brownisaur", "Grass", "D", 1));
+        //         // user.setActiveCreature(0);
+        //         startFrame.dispose();  
+        //         menuFrame.setVisible(true);          
+        //     }
+        // });
+        // JButton btn3 = new JButton("Brownisaur");
+        // btn3.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // user.addToInventory(new Creature("Squirpie", "Water", "G", 1));
+        //         // user.setActiveCreature(0);
+        //         startFrame.dispose();     
+        //         menuFrame.setVisible(true);            
+        //     }
+        // });
 
-        this.alignmentLbl = new JLabel(" ");
+        // this.alignmentLbl = new JLabel(" ");
 
-        panel.add(btn1, BorderLayout.WEST);
-        panel.add(btn2, BorderLayout.CENTER);
-        panel.add(btn3, BorderLayout.EAST);
+        // panel.add(btn1, BorderLayout.WEST);
+        // panel.add(btn2, BorderLayout.CENTER);
+        // panel.add(btn3, BorderLayout.EAST);
 
-        this.startFrame.add(panel);
+        this.startFrame.add(this.starterPanel);
     }
 
     private void initializeMenu () {
@@ -178,4 +180,18 @@ public class MainView {
         this.inventoryFrame.add(text);
         this.inventoryFrame.add(panel);
     }
+
+    public void createButton (String desc, ActionListener action){
+        JButton btn = new JButton(desc);
+        btn.addActionListener(action);
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startFrame.dispose();
+                menuFrame.setVisible(true);      
+            }
+        });
+        this.starterPanel.add(btn);
+    }
 }
+    

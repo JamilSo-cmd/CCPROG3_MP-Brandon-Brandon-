@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.*;
+
 public class MainView {
 
     private JFrame startFrame;
@@ -20,15 +22,17 @@ public class MainView {
     private JFrame inventoryFrame;
     private JLabel greetingsLbl;
     private JLabel alignmentLbl;
+    private JPanel creaturePanel;
     private JPanel starterPanel;
+    private JButton inventoryBtn;
 
     public MainView() {
 
         this.startFrame = new JFrame("Choose your starter!");
         this.startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.startFrame.setLayout(new FlowLayout());
-        this.startFrame.setSize(200, 200);
-
+        this.startFrame.setSize(600, 400);
+        this.startFrame.setLocationRelativeTo(null);
         starterPick();
         
         this.startFrame.setVisible(true);
@@ -37,7 +41,7 @@ public class MainView {
         this.menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.menuFrame.setLayout(new FlowLayout());
         this.menuFrame.setSize(450, 200);
-
+        this.menuFrame.setLocationRelativeTo(null);
         initializeMenu();
 
         this.menuFrame.setVisible(false);
@@ -46,7 +50,7 @@ public class MainView {
         this.inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.inventoryFrame.setLayout(new FlowLayout());
         this.inventoryFrame.setSize(450, 200);
-
+        this.inventoryFrame.setLocationRelativeTo(null);
         initializeInventory();
 
         this.inventoryFrame.setVisible(false);
@@ -55,57 +59,18 @@ public class MainView {
 
     private void starterPick (){
         JLabel greetingsPromptLbl = new JLabel();
-        greetingsPromptLbl.setText("Pick a Starter");
+        JPanel mainPanel = new JPanel(new GridLayout(2,1));
+
+        greetingsPromptLbl.setText("<html><h2>Pick a Starter</h2></html>");
 
         greetingsPromptLbl.setHorizontalAlignment(JLabel.CENTER);
 
-
-        this.greetingsLbl = new JLabel(" ");
-
-        this.startFrame.add(greetingsPromptLbl);
-        this.startFrame.add(greetingsLbl);
-
         this.starterPanel = new JPanel(new GridLayout(1,3));
-        
-        // JButton btn1 = new JButton("Strawander");
-        // btn1.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         // user.addToInventory(new Creature("Strawander", "Fire", "A", 1));
-        //         // user.setActiveCreature(0);  
-        //         System.out.println("check");
-        //         startFrame.dispose();
-        //         menuFrame.setVisible(true);      
-        //     }
-        // });
-        // JButton btn2 = new JButton("Squirpie");
-        // btn2.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         // user.addToInventory(new Creature("Brownisaur", "Grass", "D", 1));
-        //         // user.setActiveCreature(0);
-        //         startFrame.dispose();  
-        //         menuFrame.setVisible(true);          
-        //     }
-        // });
-        // JButton btn3 = new JButton("Brownisaur");
-        // btn3.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         // user.addToInventory(new Creature("Squirpie", "Water", "G", 1));
-        //         // user.setActiveCreature(0);
-        //         startFrame.dispose();     
-        //         menuFrame.setVisible(true);            
-        //     }
-        // });
 
-        // this.alignmentLbl = new JLabel(" ");
+        mainPanel.add(greetingsPromptLbl);
+        mainPanel.add(starterPanel);
 
-        // panel.add(btn1, BorderLayout.WEST);
-        // panel.add(btn2, BorderLayout.CENTER);
-        // panel.add(btn3, BorderLayout.EAST);
-
-        this.startFrame.add(this.starterPanel);
+        this.startFrame.add(mainPanel);
     }
 
     private void initializeMenu () {
@@ -114,25 +79,24 @@ public class MainView {
 
         menu.setText("<html><h1>MENU SCREEN</h1></html>");
 
-        JButton btn1 = new JButton("View Inventory");
-        btn1.addActionListener(new ActionListener() {
+        this.inventoryBtn = new JButton("View Inventory");
+        this.inventoryBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
-                //set window for inventory to visible
                 inventoryFrame.setVisible(true); 
             }
         });
-        JButton btn2 = new JButton("Explore an Area");
-        btn2.addActionListener(new ActionListener() {
+        JButton exploreBtn = new JButton("Explore an Area");
+        exploreBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);  
                 //set window for area to visible
             }
         });
-        JButton btn3 = new JButton("Evolve a Creature");
-        btn3.addActionListener(new ActionListener() {
+        JButton evolveBtn = new JButton("Evolve a Creature");
+        evolveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
@@ -140,8 +104,8 @@ public class MainView {
             }
         });
 
-        JButton btn4 = new JButton("Exit Program");
-        btn4.addActionListener(new ActionListener() {
+        JButton exitBtn = new JButton("Exit Program");
+        exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.dispose();
@@ -150,10 +114,10 @@ public class MainView {
 
         this.alignmentLbl = new JLabel(" ");
 
-        panel.add(btn1, BorderLayout.EAST);
-        panel.add(btn2, BorderLayout.CENTER);
-        panel.add(btn3, BorderLayout.WEST);
-        panel.add(btn4, BorderLayout.SOUTH);
+        panel.add(this.inventoryBtn, BorderLayout.EAST);
+        panel.add(exploreBtn, BorderLayout.CENTER);
+        panel.add(evolveBtn, BorderLayout.WEST);
+        panel.add(exitBtn, BorderLayout.SOUTH);
 
         this.menuFrame.add(menu);
         this.menuFrame.add(panel);
@@ -161,27 +125,47 @@ public class MainView {
 
     public void initializeInventory (){
         JLabel text = new JLabel();
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new GridLayout(2,1));
+        creaturePanel = new JPanel(new GridLayout(0,1));
+        JPanel options = new JPanel(new GridLayout(1,2));
 
-        JButton btn4 = new JButton("Exit Program");
-        btn4.addActionListener(new ActionListener() {
+        // TODO: switch panel functionality
+        
+        
+
+
+        //add options
+        JButton returnBtn = new JButton("Exit Inventory");
+        returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                inventoryFrame.dispose();
+                menuFrame.setVisible(true);
             }
         });
 
-        panel.add(btn4, BorderLayout.SOUTH);
+        JButton switchBtn = new JButton("Switch Active Creature");
+        switchBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inventoryFrame.dispose();
+            }
+        });
+
+        options.add(returnBtn);
+        options.add(switchBtn);
+        mainPanel.add(options);
+        mainPanel.add(creaturePanel);
 
         this.alignmentLbl = new JLabel(" ");
 
         
 
         this.inventoryFrame.add(text);
-        this.inventoryFrame.add(panel);
+        this.inventoryFrame.add(mainPanel);
     }
 
-    public void createButton (String desc, ActionListener action){
+    public void createStarterButton (String desc, ActionListener action){
         JButton btn = new JButton(desc);
         btn.addActionListener(action);
         btn.addActionListener(new ActionListener() {
@@ -191,7 +175,35 @@ public class MainView {
                 menuFrame.setVisible(true);      
             }
         });
+        
+        System.out.println("Before");
         this.starterPanel.add(btn);
+        System.out.println("After");
     }
+
+    public void generateCreatureList (ArrayList<Creature> creatureList){
+        
+        for (int i = 0; i < creatureList.size();i++){
+            JLabel creatureLbl = new JLabel(); 
+            Creature curCreature = creatureList.get(i);
+
+            creatureLbl.setText("<html><body>Name: " + curCreature.getName() 
+                                + "<br>Type: " + curCreature.getType()
+                                + "<br>Family: " + curCreature.getFamily()
+                                + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
+                                + "<hr></html></body>");
+
+            this.creaturePanel.add(creatureLbl);
+        }
+
+    }
+
+    public void assignOpenInvEvent (ActionListener action){
+        
+        this.inventoryBtn.addActionListener(action);
+        
+        
+    }
+    
 }
     

@@ -86,4 +86,8 @@ public class Inventory {
 
     }
 
+    public ArrayList<Creature> getRoster() {
+        return roster;
+    }
+
 }

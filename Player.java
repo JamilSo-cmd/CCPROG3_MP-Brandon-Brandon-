@@ -228,4 +228,8 @@ public class Player {
     public Creature getActiveCreature() {
         return this.activeCreature;
     }
+
+    public Inventory getPlayerInv() {
+        return playerInv;
+    }
 }

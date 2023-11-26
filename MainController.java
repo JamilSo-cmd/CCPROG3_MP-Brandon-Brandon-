@@ -20,9 +20,6 @@ public class MainController {
         this.mainView.createStarterButton("Brownisaur", pickStarterEvent("Brownisaur", "Grass", "D",1,"./resources/Brownisaur.png"));
         this.mainView.createStarterButton("Squirpie", pickStarterEvent("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
 
-        user.addToInventory(new Creature("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
-        user.addToInventory(new Creature("Strawander", "Fire", "A", 1,"./resources/Strawander.jpg"));
-
         this.mainView.assignOpenInvEvent(openInvEvent());
     }
 
@@ -35,6 +32,10 @@ public class MainController {
                 user1.addToInventory(new Creature(name,type,family,evolutionLv,imagePath));
                 user1.setActiveCreature(0); 
                 user1.viewInventory();
+
+                //TODO: Remove after testing
+                user1.addToInventory(new Creature("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
+                user1.addToInventory(new Creature("Strawander", "Fire", "A", 1,"./resources/Strawander.jpg"));
             }
         };
 

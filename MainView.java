@@ -192,7 +192,32 @@ public class MainView {
 
     public void generateCreatureList (ArrayList<Creature> creatureList) {
         
-        for (int i = 0; i < creatureList.size();i++){
+        JLabel activeHeading = new JLabel("<html><h2>Active Creature :</h2></html>");
+
+        this.creatureListPanel.add(activeHeading);
+
+        JPanel activeCreaturePanel = new JPanel(new GridLayout(1,2));
+        JLabel activeCreatureLbl = new JLabel();
+        Creature activeCurCreature = creatureList.get(0);            
+        JLabel activeCreatureImgLbl = new JLabel();
+
+        activeCreatureImgLbl.setIcon(this.createImageIcon(activeCurCreature.getImagePath(),"test"));
+        activeCreatureLbl.setText("<html><body>Active Name: " + activeCurCreature.getName() 
+                            + "<br>Type: " + activeCurCreature.getType()
+                            + "<br>Family: " + activeCurCreature.getFamily()
+                            + "<br>Evolution Lv: " + activeCurCreature.getEvolutionLv()
+                            + "<hr></html></body>");
+                            
+        activeCreaturePanel.add(activeCreatureLbl);
+        activeCreaturePanel.add(activeCreatureImgLbl);
+        this.creatureListPanel.add(activeCreaturePanel);
+
+        
+        JLabel otherHeading = new JLabel("<html><h2>Other Creatures :</h2></html>");
+
+        this.creatureListPanel.add(otherHeading);
+        
+        for (int i = 1; i < creatureList.size();i++){
             JPanel creaturePanel = new JPanel(new GridLayout(1,2));
             JLabel creatureLbl = new JLabel();
             Creature curCreature = creatureList.get(i);            

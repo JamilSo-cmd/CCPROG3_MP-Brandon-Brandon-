@@ -34,6 +34,7 @@ public class MainView {
     private JPanel creatureListPanel;
     private JPanel starterPanel;
     private JButton inventoryBtn;
+    private ActionListener switchAction;
 
     public MainView() {
 
@@ -132,32 +133,33 @@ public class MainView {
         this.menuFrame.add(panel);
     }
 
+    public void setSwitchActionEvent (ActionListener switchAction){
+
+        this.switchAction = switchAction;
+        
+    }
+
     public void initializeInventory (){
         JLabel text = new JLabel();
         JPanel mainPanel = new JPanel(new GridLayout(2,1));
         creatureListPanel = new JPanel(new GridLayout(0,1));
         JPanel options = new JPanel(new GridLayout(1,2));
 
-        // TODO: switch panel functionality
-        
-        
-
-
         //add options
         JButton returnBtn = new JButton("Exit Inventory");
         returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inventoryFrame.dispose();
+                inventoryFrame.setVisible(false);
                 menuFrame.setVisible(true);
             }
         });
 
-        JButton switchBtn = new JButton("Switch Active Creature");
+        JButton switchBtn = new JButton("Switch to Active Creature");
         switchBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inventoryFrame.dispose();
+                inventoryFrame.setVisible(false);
             }
         });
 
@@ -185,40 +187,44 @@ public class MainView {
             }
         });
         
-        System.out.println("Before");
         this.starterPanel.add(btn);
-        System.out.println("After");
+        this.startFrame.revalidate();
     }
+
+    public void reloadInventory (ArrayList<Creature> creatureList){
+
+        this.creatureListPanel.removeAll();
+        this.generateCreatureList(creatureList);
+        this.inventoryFrame.revalidate();
+
+    } 
 
     public void generateCreatureList (ArrayList<Creature> creatureList) {
         
-        JLabel activeHeading = new JLabel("<html><h2>Active Creature :</h2></html>");
-
-        this.creatureListPanel.add(activeHeading);
-
-        JPanel activeCreaturePanel = new JPanel(new GridLayout(1,2));
+        JLabel curActiveLbl = new JLabel("<html><h3>Currently Active</h3></html>");
+        JPanel activeCreaturePanel = new JPanel(new GridLayout(1,3));
         JLabel activeCreatureLbl = new JLabel();
         Creature activeCurCreature = creatureList.get(0);            
         JLabel activeCreatureImgLbl = new JLabel();
 
         activeCreatureImgLbl.setIcon(this.createImageIcon(activeCurCreature.getImagePath(),"test"));
-        activeCreatureLbl.setText("<html><body>Active Name: " + activeCurCreature.getName() 
+        activeCreatureLbl.setText("<html><body>Name: " + activeCurCreature.getName() 
                             + "<br>Type: " + activeCurCreature.getType()
                             + "<br>Family: " + activeCurCreature.getFamily()
                             + "<br>Evolution Lv: " + activeCurCreature.getEvolutionLv()
                             + "<hr></html></body>");
                             
+        activeCreaturePanel.add(curActiveLbl);
         activeCreaturePanel.add(activeCreatureLbl);
         activeCreaturePanel.add(activeCreatureImgLbl);
         this.creatureListPanel.add(activeCreaturePanel);
 
         
-        JLabel otherHeading = new JLabel("<html><h2>Other Creatures :</h2></html>");
-
-        this.creatureListPanel.add(otherHeading);
-        
         for (int i = 1; i < creatureList.size();i++){
-            JPanel creaturePanel = new JPanel(new GridLayout(1,2));
+            JButton switchBtn = new JButton("Set Active Creature");
+            switchBtn.putClientProperty("index", i);
+            switchBtn.addActionListener(this.switchAction);
+            JPanel creaturePanel = new JPanel(new GridLayout(1,3));
             JLabel creatureLbl = new JLabel();
             Creature curCreature = creatureList.get(i);            
             JLabel creatureImgLbl = new JLabel();
@@ -229,7 +235,8 @@ public class MainView {
                                 + "<br>Family: " + curCreature.getFamily()
                                 + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
                                 + "<hr></html></body>");
-
+            
+            creaturePanel.add(switchBtn);
             creaturePanel.add(creatureLbl);
             creaturePanel.add(creatureImgLbl);
             this.creatureListPanel.add(creaturePanel);
@@ -259,5 +266,6 @@ public class MainView {
         }
     }
     
+
 }
     

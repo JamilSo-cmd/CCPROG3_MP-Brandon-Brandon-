@@ -8,6 +8,7 @@
  * 
  */
 import java.util.Random;
+import java.util.*;
 
 public class Player {
     // attributes
@@ -51,6 +52,7 @@ public class Player {
     public void setActiveCreature(int index) {
 
         this.activeCreature = playerInv.getCreature(index);
+        Collections.swap(this.playerInv.getRoster(),0,index);
 
     }
 

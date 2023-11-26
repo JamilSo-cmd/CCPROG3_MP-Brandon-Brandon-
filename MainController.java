@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -19,8 +20,10 @@ public class MainController {
         this.mainView.createStarterButton("Strawander", pickStarterEvent("Strawander", "Fire", "A", 1,"./resources/Strawander.jpg"));
         this.mainView.createStarterButton("Brownisaur", pickStarterEvent("Brownisaur", "Grass", "D",1,"./resources/Brownisaur.png"));
         this.mainView.createStarterButton("Squirpie", pickStarterEvent("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
-
+        
         this.mainView.assignOpenInvEvent(openInvEvent());
+
+        this.mainView.setSwitchActionEvent(switchCreatureEvent());
     }
 
     private ActionListener pickStarterEvent(String name, String type, String family,int evolutionLv,String imagePath){
@@ -49,10 +52,24 @@ public class MainController {
         ActionListener action = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                curMainView.generateCreatureList(user1.getPlayerInv().getRoster());
+                curMainView.reloadInventory(user1.getPlayerInv().getRoster());
             }
         };
 
+        return action;
+    }
+
+    private ActionListener switchCreatureEvent (){
+        Player user1 = this.user;
+        MainView curMainView = this.mainView;
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                user1.setActiveCreature((Integer)((JButton)e.getSource()).getClientProperty( "index" ));
+                curMainView.reloadInventory(user1.getPlayerInv().getRoster());
+            }
+        };
         return action;
     }
 

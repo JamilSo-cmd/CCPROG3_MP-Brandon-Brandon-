@@ -32,13 +32,13 @@ public class MainController {
         ActionListener action = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                user1.addToInventory(new Creature(name,type,family,evolutionLv,imagePath));
+                user1.addToInventory(new EL1(name,type,family,evolutionLv,imagePath));
                 user1.setActiveCreature(0); 
                 user1.viewInventory();
 
                 //TODO: Remove after testing
-                user1.addToInventory(new Creature("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
-                user1.addToInventory(new Creature("Strawander", "Fire", "A", 1,"./resources/Strawander.jpg"));
+                user1.addToInventory(new EL1("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
+                user1.addToInventory(new EL1("Strawander", "Fire", "A", 1,"./resources/Strawander.jpg"));
             }
         };
 

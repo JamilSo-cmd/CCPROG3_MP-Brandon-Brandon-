@@ -2,18 +2,27 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
+import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.*;
+import java.net.*;
 
 public class MainView {
 
@@ -22,7 +31,7 @@ public class MainView {
     private JFrame inventoryFrame;
     private JLabel greetingsLbl;
     private JLabel alignmentLbl;
-    private JPanel creaturePanel;
+    private JPanel creatureListPanel;
     private JPanel starterPanel;
     private JButton inventoryBtn;
 
@@ -49,7 +58,7 @@ public class MainView {
         this.inventoryFrame = new JFrame("Inventory");
         this.inventoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.inventoryFrame.setLayout(new FlowLayout());
-        this.inventoryFrame.setSize(450, 200);
+        this.inventoryFrame.setSize(450, 800);
         this.inventoryFrame.setLocationRelativeTo(null);
         initializeInventory();
 
@@ -126,7 +135,7 @@ public class MainView {
     public void initializeInventory (){
         JLabel text = new JLabel();
         JPanel mainPanel = new JPanel(new GridLayout(2,1));
-        creaturePanel = new JPanel(new GridLayout(0,1));
+        creatureListPanel = new JPanel(new GridLayout(0,1));
         JPanel options = new JPanel(new GridLayout(1,2));
 
         // TODO: switch panel functionality
@@ -155,7 +164,7 @@ public class MainView {
         options.add(returnBtn);
         options.add(switchBtn);
         mainPanel.add(options);
-        mainPanel.add(creaturePanel);
+        mainPanel.add(creatureListPanel);
 
         this.alignmentLbl = new JLabel(" ");
 
@@ -181,19 +190,24 @@ public class MainView {
         System.out.println("After");
     }
 
-    public void generateCreatureList (ArrayList<Creature> creatureList){
+    public void generateCreatureList (ArrayList<Creature> creatureList) {
         
         for (int i = 0; i < creatureList.size();i++){
-            JLabel creatureLbl = new JLabel(); 
-            Creature curCreature = creatureList.get(i);
+            JPanel creaturePanel = new JPanel(new GridLayout(1,2));
+            JLabel creatureLbl = new JLabel();
+            Creature curCreature = creatureList.get(i);            
+            JLabel creatureImgLbl = new JLabel();
 
+            creatureImgLbl.setIcon(this.createImageIcon(curCreature.getImagePath(),"test"));
             creatureLbl.setText("<html><body>Name: " + curCreature.getName() 
                                 + "<br>Type: " + curCreature.getType()
                                 + "<br>Family: " + curCreature.getFamily()
                                 + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
                                 + "<hr></html></body>");
 
-            this.creaturePanel.add(creatureLbl);
+            creaturePanel.add(creatureLbl);
+            creaturePanel.add(creatureImgLbl);
+            this.creatureListPanel.add(creaturePanel);
         }
 
     }
@@ -202,7 +216,22 @@ public class MainView {
         
         this.inventoryBtn.addActionListener(action);
         
-        
+    }
+
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected ImageIcon createImageIcon(String path,
+        String description) {
+        URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
+            Image image = imageIcon.getImage(); // transform it 
+            Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+            imageIcon = new ImageIcon(newimg);  // transform it back
+            return imageIcon;
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
     
 }

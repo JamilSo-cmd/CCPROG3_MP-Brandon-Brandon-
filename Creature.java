@@ -6,7 +6,6 @@
  * @version 1.0
  * 
  */
-
 import java.util.Random;
 
 public class Creature {
@@ -31,6 +30,10 @@ public class Creature {
      * Represents the creature's health points
      */
     private int healthPoints = 50;
+    /**
+     * Represents the file path to the image of the creature
+     */
+    private String imagePath;
     // methods
 
     /**
@@ -44,12 +47,13 @@ public class Creature {
      *               represents the creature's evolution level
      * @param EL
      */
-    public Creature(String name, String type, String family, int EL) {
+    public Creature(String name, String type, String family, int EL, String imagePath) {
 
         this.name = name;
         this.type = type;
         this.family = family;
         this.evolutionLv = EL;
+        this.imagePath = imagePath;
     }
 
     /**
@@ -151,5 +155,14 @@ public class Creature {
         }
 
         return hasAdvantage;
+    }
+
+    /**
+     * returns the file path for the creature image
+     * @return
+     * file path of the creature image
+     */
+    public String getImagePath() {
+        return imagePath;
     }
 }

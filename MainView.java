@@ -143,7 +143,7 @@ public class MainView {
         JLabel text = new JLabel();
         JPanel mainPanel = new JPanel(new GridLayout(2,1));
         creatureListPanel = new JPanel(new GridLayout(0,1));
-        JPanel options = new JPanel(new GridLayout(1,2));
+        JPanel options = new JPanel(new GridLayout(1,1));
 
         //add options
         JButton returnBtn = new JButton("Exit Inventory");
@@ -155,16 +155,7 @@ public class MainView {
             }
         });
 
-        JButton switchBtn = new JButton("Switch to Active Creature");
-        switchBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inventoryFrame.setVisible(false);
-            }
-        });
-
         options.add(returnBtn);
-        options.add(switchBtn);
         mainPanel.add(options);
         mainPanel.add(creatureListPanel);
 

@@ -356,11 +356,15 @@ public class Creature {
      * @return
      *         the amount of damage done by the creature
      */
-    public int attack() {
+    public int attack(boolean typeAdvantage) {
         Random rand = new Random();
         int max = 10, min = 1;
 
         int dmgValue = rand.nextInt(max - min + 1) + min;
+
+        if (typeAdvantage) {
+            dmgValue *= 1.5;
+        }
 
         return dmgValue;
     }

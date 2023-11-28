@@ -42,6 +42,7 @@ public class MainView {
     private JButton inventoryBtn;
     private JButton exploreBtn;
     private JButton evolveBtn;
+    private JButton evolutionBtn;
     private ActionListener switchAction;
     private ActionListener selectAction1;
     private ActionListener selectAction2;
@@ -213,11 +214,10 @@ public class MainView {
 
         });
 
-        JButton evolutionBtn = new JButton("Proceed to Evolution");
-        evolutionBtn.addActionListener(this.evolveAction);
+        this.evolutionBtn = new JButton("Proceed to Evolution");
 
         buttonPanel.add(resultPanel);
-        buttonPanel.add(evolutionBtn);
+        buttonPanel.add(this.evolutionBtn);
         buttonPanel.add(returnBtn);
 
         selectionPanel.add(evolutionPanel1);
@@ -240,6 +240,12 @@ public class MainView {
 
         this.starterPanel.add(btn);
         this.startFrame.revalidate();
+    }
+
+    public void setEvolutionActionEvent(ActionListener evolve) {
+
+        this.evolveAction = evolve;
+        
     }
 
     public void reloadInventory(ArrayList<Creature> creatureList) {
@@ -376,8 +382,7 @@ public class MainView {
 
     }
 
-    public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2,
-            String evoResult) {
+    public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2,String evoResult) {
 
         this.resultPanel.removeAll();
 
@@ -406,6 +411,10 @@ public class MainView {
         this.generateCreatureEvolutionList1(creatureList);
         this.evolutionPanel2.removeAll();
         this.generateCreatureEvolutionList2(creatureList);
+
+        this.evolutionBtn.removeActionListener(this.evolveAction);
+        this.evolutionBtn.addActionListener(this.evolveAction);
+
         this.evolutionFrame.revalidate();
 
     }
@@ -426,9 +435,5 @@ public class MainView {
 
     }
 
-    public void setEvolutionActionEvent(ActionListener evolve) {
-
-        this.evolveAction = evolve;
-
-    }
+    
 }

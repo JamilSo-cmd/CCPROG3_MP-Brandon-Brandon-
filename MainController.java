@@ -25,7 +25,7 @@ public class MainController {
         
         this.mainView.setSwitchActionEvent(switchCreatureEvent());
 
-
+        this.mainView.assignOpenEvoEvent();
     }
 
     private ActionListener pickStarterEvent(String name, String type, String family,int evolutionLv,String imagePath){
@@ -36,7 +36,6 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
                 user1.addToInventory(new EL1(name,type,family,evolutionLv,imagePath));
                 user1.setActiveCreature(0); 
-                user1.viewInventory();
 
                 //TODO: Remove after testing
                 user1.addToInventory(new EL1("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));

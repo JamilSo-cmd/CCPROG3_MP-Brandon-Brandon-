@@ -281,6 +281,12 @@ public class MainView {
             return null;
         }
     }
+
+    public void assignOpenEvoEvent() {
+
+        
+
+    }
     
 
 }

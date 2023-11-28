@@ -184,23 +184,6 @@ public class Player {
     }
 
     /**
-     * shows the information of each creature in the player's inventory, including
-     * the current active creature
-     * 
-     * @param activeCreature
-     *                       represent the player's current creature
-     * @param playerInv
-     *                       represents the player's inventory
-     */
-    public void viewInventory() {
-
-        playerInv.viewInventory();
-
-        System.out.println("Current Active Creature: " + activeCreature.getName());
-
-    }
-
-    /**
      * gets the Player's current position of x and y coordinate
      * 
      * @return

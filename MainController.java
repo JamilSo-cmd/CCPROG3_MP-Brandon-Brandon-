@@ -34,7 +34,19 @@ public class MainController {
         
         this.mainView.setSwitchActionEvent(switchCreatureEvent());
 
-        this.mainView.assignOpenEvoEvent();
+        this.mainView.assignOpenEvoEvent(openEvoEvent());
+    }
+
+    private ActionListener openEvoEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                curMainView.reloadEvolution(user1.getPlayerInv().getRoster());
+            }};
+        return action;
     }
 
     private ActionListener pickStarterEvent(String name, String type, String family,int evolutionLv,String imagePath){
@@ -82,5 +94,6 @@ public class MainController {
         };
         return action;
     }
+
 
 }

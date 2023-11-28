@@ -39,8 +39,11 @@ public class MainView {
     private JPanel creatureListPanel;
     private JPanel starterPanel;
     private JButton inventoryBtn;
+    private JButton evolveBtn;
     private ActionListener switchAction;
-    private JPanel evolutionPanel;    
+    private JPanel evolutionPanel1;
+    private JPanel evolutionPanel2;
+        
 
     public MainView() {
 
@@ -74,7 +77,7 @@ public class MainView {
         this.evolutionFrame = new JFrame("Evolution");
         this.evolutionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
         this.evolutionFrame.setLayout(new FlowLayout());
-        this.evolutionFrame.setSize(450, 800);
+        this.evolutionFrame.setSize(1500, 800);
         this.evolutionFrame.setLocationRelativeTo(null);
 
         initializeEvolutionMenu();
@@ -119,8 +122,8 @@ public class MainView {
                 //set window for area to visible
             }
         });
-        JButton evolveBtn = new JButton("Evolve a Creature");
-        evolveBtn.addActionListener(new ActionListener() {
+        this.evolveBtn = new JButton("Evolve a Creature");
+        this.evolveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
@@ -180,20 +183,30 @@ public class MainView {
     public void initializeEvolutionMenu(){
         
         JPanel selectionPanel = new JPanel(new GridLayout(1,3));
+        evolutionPanel1 = new JPanel(new GridLayout(0,1));
+        evolutionPanel2 = new JPanel(new GridLayout(0,1));
+        JPanel buttonPanel = new JPanel(new GridLayout(3,1));
         
         JButton returnBtn = new JButton("Return to Menu");
         returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inventoryFrame.setVisible(false);
+                evolutionFrame.setVisible(false);
                 menuFrame.setVisible(true);
             }
+            
         });
-        
-        this.evolutionFrame.add(new JLabel("Test deez"));
-        this.evolutionFrame.add(returnBtn);
+
+        JButton evolveBtn = new JButton("Proceed to Evolution");
+
+        buttonPanel.add(new JLabel("Result goes here"));
+        buttonPanel.add(evolveBtn);
+        buttonPanel.add(returnBtn);
+
+        selectionPanel.add(evolutionPanel1);
+        selectionPanel.add(buttonPanel);
+        selectionPanel.add(evolutionPanel2);
         this.evolutionFrame.add(selectionPanel);
-        this.evolutionFrame.revalidate();
     }
 
     public void createStarterButton (String desc, ActionListener action){
@@ -219,8 +232,55 @@ public class MainView {
 
     } 
 
-    public void generateCreatureEvolutionList (ArrayList<Creature> creatureList){
+    public void generateCreatureEvolutionList1 (ArrayList<Creature> creatureList){
 
+        for (int i = 0; i < creatureList.size();i++){
+            JButton switchBtn = new JButton("Select");
+            switchBtn.putClientProperty("index", i);
+            switchBtn.addActionListener(this.switchAction);
+            JPanel creaturePanel = new JPanel(new GridLayout(1,3));
+            JLabel creatureLbl = new JLabel();
+            Creature curCreature = creatureList.get(i);            
+            JLabel creatureImgLbl = new JLabel();
+
+            creatureImgLbl.setIcon(this.createImageIcon(curCreature.getImagePath(),"test"));
+            creatureLbl.setText("<html><body>Name: " + curCreature.getName() 
+                                + "<br>Type: " + curCreature.getType()
+                                + "<br>Family: " + curCreature.getFamily()
+                                + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
+                                + "<hr></html></body>");
+            
+            creaturePanel.add(switchBtn);
+            creaturePanel.add(creatureLbl);
+            creaturePanel.add(creatureImgLbl);
+            this.evolutionPanel1.add(creaturePanel);
+        }
+
+    }
+
+    public void generateCreatureEvolutionList2 (ArrayList<Creature> creatureList){
+
+        for (int i = 0; i < creatureList.size();i++){
+            JButton switchBtn = new JButton("Select");
+            switchBtn.putClientProperty("index", i);
+            switchBtn.addActionListener(this.switchAction);
+            JPanel creaturePanel = new JPanel(new GridLayout(1,3));
+            JLabel creatureLbl = new JLabel();
+            Creature curCreature = creatureList.get(i);            
+            JLabel creatureImgLbl = new JLabel();
+
+            creatureImgLbl.setIcon(this.createImageIcon(curCreature.getImagePath(),"test"));
+            creatureLbl.setText("<html><body>Name: " + curCreature.getName() 
+                                + "<br>Type: " + curCreature.getType()
+                                + "<br>Family: " + curCreature.getFamily()
+                                + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
+                                + "<hr></html></body>");
+            
+            creaturePanel.add(switchBtn);
+            creaturePanel.add(creatureLbl);
+            creaturePanel.add(creatureImgLbl);
+            this.evolutionPanel2.add(creaturePanel);
+        }
 
     }
 
@@ -269,13 +329,15 @@ public class MainView {
 
     }
 
+    
     public void assignOpenInvEvent (ActionListener action){
         
         this.inventoryBtn.addActionListener(action);
         
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
+    /** 
+     * Returns an ImageIcon, or null if the path was invalid. */
     protected ImageIcon createImageIcon(String path,
         String description) {
         URL imgURL = getClass().getResource(path);
@@ -291,12 +353,21 @@ public class MainView {
         }
     }
 
-    public void assignOpenEvoEvent() {
+    public void assignOpenEvoEvent(ActionListener action) {
 
-
+        this.evolveBtn.addActionListener(action);
 
     }
     
+    public void reloadEvolution(ArrayList<Creature> creatureList){
+        
+        this.evolutionPanel1.removeAll();
+        this.generateCreatureEvolutionList1(creatureList);
+        this.evolutionPanel2.removeAll();
+        this.generateCreatureEvolutionList2(creatureList);
+        this.evolutionFrame.revalidate();
+
+    }
 
 }
     

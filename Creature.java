@@ -57,6 +57,90 @@ public class Creature {
     }
 
     /**
+     * Returns a new Creature instance that is randomly chosen out of the possible
+     * creatures that exist
+     * 
+     * @return Creature
+     * 
+     * 
+     */
+    public static Creature randomCreature1() {
+        Random rng = new Random();
+
+        String[] names = { "Strawander", "Chocowool", "Parfwit", "Brownisaur",
+                "Frubat", "Malts", "Squirpie", "Chocolite", "Oshacone" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Strawander".equals(randomName) || "Chocowool".equals(randomName) || "Parfwit".equals(randomName)) {
+            creatureType = "Fire";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 0;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('A') || families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Brownisaur".equals(randomName) || "Frubat".equals(randomName) || "Malts".equals(randomName)) {
+            creatureType = "Grass";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 3;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Squirpie".equals(randomName) || "Chocolite".equals(randomName) || "Oshacone".equals(randomName)) {
+            creatureType = "Water";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 6;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('G')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                    familyChecker = false;
+                }
+                i++;
+            }
+        }
+
+        return new Creature(randomName, creatureType, creatureFamily, 1, creatureImagePath);
+    }
+
+    /**
      * lowers the healthpoints of a Creature object by the damage value
      * 
      * @param healthPoints
@@ -159,8 +243,9 @@ public class Creature {
 
     /**
      * returns the file path for the creature image
+     * 
      * @return
-     * file path of the creature image
+     *         file path of the creature image
      */
     public String getImagePath() {
         return imagePath;

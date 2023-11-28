@@ -21,7 +21,7 @@ public class Creature {
     /**
      * Represents the creature's family
      */
-    private String family;
+    private char family;
     /**
      * Represents the creature's evolution Lv
      */
@@ -47,7 +47,15 @@ public class Creature {
      *               represents the creature's evolution level
      * @param EL
      */
+<<<<<<< Updated upstream
     public Creature(String name, String type, String family, int EL, String imagePath) {
+=======
+<<<<<<< Updated upstream
+    public Creature(String name, String type, String family, int EL) {
+=======
+    public Creature(String name, String type, char family, int EL, String imagePath) {
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
         this.name = name;
         this.type = type;
@@ -94,7 +102,7 @@ public class Creature {
      * @return
      *         the creature's family
      */
-    public String getFamily() {
+    public char getFamily() {
         return family;
     }
 

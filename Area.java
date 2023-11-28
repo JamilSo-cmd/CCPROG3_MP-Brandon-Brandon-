@@ -100,24 +100,22 @@ public class Area {
         };
     }
 
-    /*
-     * private void area2() {
-     * this.tiles = new int[][]{
-     * {0, 0, 0},
-     * {0, 0, 0},
-     * {0, 0, 0}
-     * };
-     * }
-     * 
-     * private void area3() {
-     * this.tiles = new int[][]{
-     * {0, 0, 0, 0},
-     * {0, 0, 0, 0},
-     * {0, 0, 0, 0},
-     * {0, 0, 0, 0}
-     * };
-     * }
-     */
+    private void area2() {
+        this.tiles = new int[][] {
+                { 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0 }
+        };
+    }
+
+    private void area3() {
+        this.tiles = new int[][] {
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 0 }
+        };
+    }
 
     /**
      * gets the number of rows for the area

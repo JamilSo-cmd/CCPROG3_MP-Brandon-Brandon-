@@ -3,15 +3,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
-import javax.imageio.ImageIO;
 import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -29,12 +26,12 @@ public class MainView {
     private JFrame startFrame;
     private JFrame menuFrame;
     private JFrame inventoryFrame;
-    private JLabel greetingsLbl;
-    private JLabel alignmentLbl;
+    private JFrame evolutionFrame;
     private JPanel creatureListPanel;
     private JPanel starterPanel;
     private JButton inventoryBtn;
     private ActionListener switchAction;
+    private JPanel evolutionPanel;    
 
     public MainView() {
 
@@ -65,6 +62,14 @@ public class MainView {
 
         this.inventoryFrame.setVisible(false);
         
+        this.evolutionFrame = new JFrame("Evolution");
+        this.evolutionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
+        this.evolutionFrame.setLayout(new FlowLayout());
+        this.evolutionFrame.setSize(450, 800);
+        this.evolutionFrame.setLocationRelativeTo(null);
+
+        initializeEvolutionMenu();
+        this.evolutionFrame.setVisible(false);
     }
 
     private void starterPick (){
@@ -110,7 +115,8 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
-                //set window for evolution to visible
+                evolutionFrame.setVisible(true);
+
             }
         });
 
@@ -121,8 +127,6 @@ public class MainView {
                 menuFrame.dispose();
             }
         });
-
-        this.alignmentLbl = new JLabel(" ");
 
         panel.add(this.inventoryBtn, BorderLayout.EAST);
         panel.add(exploreBtn, BorderLayout.CENTER);
@@ -158,13 +162,29 @@ public class MainView {
         options.add(returnBtn);
         mainPanel.add(options);
         mainPanel.add(creatureListPanel);
-
-        this.alignmentLbl = new JLabel(" ");
-
         
 
         this.inventoryFrame.add(text);
         this.inventoryFrame.add(mainPanel);
+    }
+
+    public void initializeEvolutionMenu(){
+        
+        JPanel selectionPanel = new JPanel(new GridLayout(1,3));
+        
+        JButton returnBtn = new JButton("Return to Menu");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inventoryFrame.setVisible(false);
+                menuFrame.setVisible(true);
+            }
+        });
+        
+        this.evolutionFrame.add(new JLabel("Test deez"));
+        this.evolutionFrame.add(returnBtn);
+        this.evolutionFrame.add(selectionPanel);
+        this.evolutionFrame.revalidate();
     }
 
     public void createStarterButton (String desc, ActionListener action){
@@ -189,6 +209,11 @@ public class MainView {
         this.inventoryFrame.revalidate();
 
     } 
+
+    public void generateCreatureEvolutionList (ArrayList<Creature> creatureList){
+
+
+    }
 
     public void generateCreatureList (ArrayList<Creature> creatureList) {
         

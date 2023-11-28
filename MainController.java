@@ -22,8 +22,10 @@ public class MainController {
         this.mainView.createStarterButton("Squirpie", pickStarterEvent("Squirpie", "Water", "G", 1,"./resources/Squirpie.jpg"));
         
         this.mainView.assignOpenInvEvent(openInvEvent());
-
+        
         this.mainView.setSwitchActionEvent(switchCreatureEvent());
+
+
     }
 
     private ActionListener pickStarterEvent(String name, String type, String family,int evolutionLv,String imagePath){

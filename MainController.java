@@ -1,3 +1,12 @@
+
+/**
+ * <B>Main Controller of the Program<B>
+ * 
+ * @author Brandon Jaramillo Anthony  
+ * @author Brandon Jamil So
+ * @version 2.0
+ * 
+ */
 import java.util.ArrayList;
 import java.util.Collections;
 import java.awt.event.*;

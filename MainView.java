@@ -1,3 +1,12 @@
+
+/**
+ * <B>View of the Program<B>
+ * 
+ * @author Brandon Jaramillo Anthony  
+ * @author Brandon Jamil So
+ * @version 2.0
+ * 
+ */
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -284,7 +293,7 @@ public class MainView {
 
     public void assignOpenEvoEvent() {
 
-        
+
 
     }
     

@@ -64,7 +64,7 @@ public class Creature {
      * 
      * 
      */
-    public static Creature randomCreature1() {
+    public static Creature randomCreatureEL1() {
         Random rng = new Random();
 
         String[] names = { "Strawander", "Chocowool", "Parfwit", "Brownisaur",
@@ -138,6 +138,154 @@ public class Creature {
         }
 
         return new Creature(randomName, creatureType, creatureFamily, 1, creatureImagePath);
+    }
+
+    public static Creature randomCreatureEL2() {
+        Random rng = new Random();
+
+        String[] names = { "Straweleon", "Chocofluff", "Parfure", "Chocosaur",
+                "Golberry", "Kirlicake", "Tartortle", "Chocolish", "Dewice" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Straweleon".equals(randomName) || "Chocowool".equals(randomName) || "Parfure".equals(randomName)) {
+            creatureType = "Fire";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 0;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Chocosaur".equals(randomName) || "Golberry".equals(randomName) || "Kirlicake".equals(randomName)) {
+            creatureType = "Grass";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 3;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Tartortle".equals(randomName) || "Chocolish".equals(randomName) || "Dewice".equals(randomName)) {
+            creatureType = "Water";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 6;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                    familyChecker = false;
+                }
+                i++;
+            }
+        }
+
+        return new Creature(randomName, creatureType, creatureFamily, 2, creatureImagePath);
+    }
+
+    public static Creature randomCreatureEL3() {
+        Random rng = new Random();
+
+        String[] names = { "Strawizard", "Candaros", "Parfelure", "Fudgasaur",
+                "Croberry", "Velvevoir", "Piestoise", "Icesundae", "Samurcone" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Strawizard".equals(randomName) || "Candaros".equals(randomName) || "Parfelure".equals(randomName)) {
+            creatureType = "Fire";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 0;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Fudgasaur".equals(randomName) || "Croberry".equals(randomName) || "Velvevoir".equals(randomName)) {
+            creatureType = "Grass";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 3;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                    familyChecker = false;
+                }
+                i++;
+            }
+
+        } else if ("Piestoise".equals(randomName) || "Icesundae".equals(randomName) || "Samurcone".equals(randomName)) {
+            creatureType = "Water";
+
+            boolean familyChecker = true;
+            while (familyChecker) {
+                int i = 6;
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('G')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                    familyChecker = false;
+                }
+                i++;
+            }
+        }
+
+        return new Creature(randomName, creatureType, creatureFamily, 3, creatureImagePath);
     }
 
     /**

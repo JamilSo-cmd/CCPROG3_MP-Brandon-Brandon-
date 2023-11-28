@@ -37,8 +37,10 @@ public class MainView {
     private JFrame inventoryFrame;
     private JFrame exploreFrame;
     private JFrame evolutionFrame;
+    private JFrame encounterFrame;
     private JPanel creatureListPanel;
     private JPanel starterPanel;
+    private JPanel statusPanel;
     private JButton inventoryBtn;
     private JButton exploreBtn;
     private JButton evolveBtn;
@@ -46,12 +48,12 @@ public class MainView {
     private ActionListener switchAction;
     private ActionListener selectAction1;
     private ActionListener selectAction2;
+    private ActionListener evolveAction;
     private JPanel evolutionPanel1;
     private JPanel evolutionPanel2;
     private JPanel resultPanel;
     private JLabel resultLbl;
     private JLabel selectImgLbl;
-    private ActionListener evolveAction;
 
     public MainView() {
 
@@ -99,6 +101,15 @@ public class MainView {
 
         initializeEvolutionMenu();
         this.evolutionFrame.setVisible(false);
+        
+        this.encounterFrame = new JFrame("Evolution");
+        this.encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.encounterFrame.setLayout(new FlowLayout());
+        this.encounterFrame.setSize(1500, 800);
+        this.encounterFrame.setLocationRelativeTo(null);
+
+        initializeEncounterScreen();
+        this.encounterFrame.setVisible(false);
     }
 
     private void starterPick() {
@@ -136,7 +147,8 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
-                // set window for area to visible
+                encounterFrame.setVisible(true);
+                // replace frame with exploreframe
             }
         });
         this.evolveBtn = new JButton("Evolve a Creature");
@@ -153,7 +165,7 @@ public class MainView {
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuFrame.dispose();
+                System.exit(0);
             }
         });
 
@@ -192,6 +204,40 @@ public class MainView {
     }
 
     public void initializeChooseAreaMenu() {
+
+        
+
+    }
+
+    public void initializeEncounterScreen(){
+
+        JPanel mainEncounterPanel = new JPanel(new GridLayout(2,1));
+        JPanel encounterBtnPanel = new JPanel(new GridLayout(1,4));
+        this.statusPanel = new JPanel(new GridLayout(1,3));
+
+        JButton returnBtn = new JButton("Run Away");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                encounterFrame.setVisible(false);
+                menuFrame.setVisible(true);
+            }
+
+        }); 
+
+        JButton attackBtn = new JButton("Attack");
+        JButton swapBtn = new JButton("Swap");
+        JButton catchBtn = new JButton("Catch");
+
+        encounterBtnPanel.add(attackBtn);
+        encounterBtnPanel.add(swapBtn);
+        encounterBtnPanel.add(catchBtn);
+        encounterBtnPanel.add(returnBtn);
+
+        mainEncounterPanel.add(new JLabel("tested"));
+        mainEncounterPanel.add(encounterBtnPanel);
+
+        this.encounterFrame.add(mainEncounterPanel);
 
     }
 
@@ -235,6 +281,7 @@ public class MainView {
             public void actionPerformed(ActionEvent e) {
                 startFrame.dispose();
                 menuFrame.setVisible(true);
+                // replace frame with the exploration frame
             }
         });
 
@@ -379,6 +426,13 @@ public class MainView {
     public void assignOpenEvoEvent(ActionListener action) {
 
         this.evolveBtn.addActionListener(action);
+
+    }
+    
+    //TODO: revise when area frame is done
+    public void assignStartEncounterEvent(ActionListener action) {
+
+        this.exploreBtn.addActionListener(action);
 
     }
 

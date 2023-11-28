@@ -46,6 +46,20 @@ public class MainController {
         this.mainView.setSelectActionEvent2(selectCreatureEvent2());
 
         this.mainView.setEvolutionActionEvent(evolutionEvent());
+
+        this.mainView.assignStartEncounterEvent(startEncounterEvent());
+    }
+
+    private ActionListener startEncounterEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actions to be performed when Encounter starts
+            }};
+        return action;
     }
 
     private ActionListener openEvoEvent() {
@@ -187,14 +201,13 @@ public class MainController {
                         case 'A':{
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new Creature("Strawleon","Fire" ,'A' ,2 ,"./resources/Straweleon.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Strawleon","Fire" ,'A' ,2 ,"./resources/Strawleon.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Stawizard","Fire" ,'A' ,3 ,"./resources/Stawizard.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Stawizard","Fire" ,'A' ,3 ,"./resources/Stawizard.png" ));
 
                             }
                             
@@ -204,13 +217,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Chocosaur","Grass" ,'D' ,2 ,"./resources/Chocosaur.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Chocosaur","Grass" ,'D' ,2 ,"./resources/Chocosaur.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Fudgasaur","Grass" ,'D' ,3 ,"./resources/Fudgasaur.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Fudgasaur","Grass" ,'D' ,3 ,"./resources/Fudgasaur.png" ));
 
                             }
                             
@@ -220,13 +233,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Tartortle","Water" ,'G' ,2 ,"./resources/Tartortle.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Tartortle","Water" ,'G' ,2 ,"./resources/Tartortle.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Piestoise","Water" ,'G' ,3 ,"./resources/Piestoise.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Piestoise","Water" ,'G' ,3 ,"./resources/Piestoise.png" ));
 
                             }
                             
@@ -236,13 +249,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Chocolish","Water" ,'H' ,2 ,"./resources/Chocolish.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Chocolish","Water" ,'H' ,2 ,"./resources/Chocolish.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Icesundae","Water" ,'H' ,3 ,"./resources/Icesundae.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Icesundae","Water" ,'H' ,3 ,"./resources/Icesundae.png" ));
 
                             }
                             
@@ -251,13 +264,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Dewice","Water" ,'I' ,2 ,"./resources/Dewice.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Dewice","Water" ,'I' ,2 ,"./resources/Dewice.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Samurcone","Water" ,'I' ,3 ,"./resources/Samurcone.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Samurcone","Water" ,'I' ,3 ,"./resources/Samurcone.png" ));
 
                             }
                             
@@ -268,13 +281,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Kirlicake","Grass" ,'F' ,2 ,"./resources/Kirlicake.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Kirlicake","Grass" ,'F' ,2 ,"./resources/Kirlicake.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Velvevoir","Grass" ,'F' ,3 ,"./resources/Velvevoir.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Velvevoir","Grass" ,'F' ,3 ,"./resources/Velvevoir.png" ));
 
                             }
                             
@@ -285,13 +298,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Golberry","Grass" ,'E' ,2 ,"./resources/Golberry.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Golberry","Grass" ,'E' ,2 ,"./resources/Golberry.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Croberry","Grass" ,'E' ,3 ,"./resources/Croberry.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Croberry","Grass" ,'E' ,3 ,"./resources/Croberry.png" ));
 
                             }
                             
@@ -302,13 +315,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Chocofluff","Fire" ,'B' ,2 ,"./resources/Chocofluff.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Chocofluff","Fire" ,'B' ,2 ,"./resources/Chocofluff.png" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Candaros","Fire" ,'B' ,3 ,"./resources/Candaros.png" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Candaros","Fire" ,'B' ,3 ,"./resources/Candaros.png" ));
 
                             }
                             
@@ -319,13 +332,13 @@ public class MainController {
                         
                             if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Parfure","Fire" ,'C' ,2 ,"./resources/Parfure.jpg" ));
+                                user1.getPlayerInv().getRoster().add(new EL2("Parfure","Fire" ,'C' ,2 ,"./resources/Parfure.jpg" ));
 
                             }
                             
                             else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new Creature("Parfelure","Fire" ,'C' ,3 ,"./resources/Parfelure.jpg" ));
+                                user1.getPlayerInv().getRoster().add(new EL3("Parfelure","Fire" ,'C' ,3 ,"./resources/Parfelure.jpg" ));
 
                             }
                             
@@ -335,15 +348,9 @@ public class MainController {
 
                     user1.getPlayerInv().getRoster().remove(index1);
                     user1.getPlayerInv().getRoster().remove(index2);
-                    if (index1 == 0){
 
+                    if (index1 == 0 || index2 == 0){
                         user1.setActiveCreature(0);
-
-                    }
-                    if (index2 == 0){
-
-                        user1.setActiveCreature(0);
-
                     }
 
                     index1 = 0;

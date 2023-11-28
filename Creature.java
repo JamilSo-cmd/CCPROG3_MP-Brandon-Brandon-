@@ -47,15 +47,7 @@ public class Creature {
      *               represents the creature's evolution level
      * @param EL
      */
-<<<<<<< Updated upstream
-    public Creature(String name, String type, String family, int EL, String imagePath) {
-=======
-<<<<<<< Updated upstream
-    public Creature(String name, String type, String family, int EL) {
-=======
     public Creature(String name, String type, char family, int EL, String imagePath) {
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
         this.name = name;
         this.type = type;

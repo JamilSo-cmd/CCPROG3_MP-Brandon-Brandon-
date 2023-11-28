@@ -38,16 +38,6 @@ public class MainView {
     private JFrame evolutionFrame;
     private JPanel creatureListPanel;
     private JPanel starterPanel;
-<<<<<<< Updated upstream
-    private JButton inventoryBtn;
-    private JButton evolveBtn;
-    private ActionListener switchAction;
-    private JPanel evolutionPanel1;
-    private JPanel evolutionPanel2;
-        
-=======
-<<<<<<< Updated upstream
-=======
     private JButton inventoryBtn;
     private JButton evolveBtn;
     private ActionListener switchAction;
@@ -59,8 +49,6 @@ public class MainView {
     private JLabel resultLbl;
     private JLabel selectImgLbl;
     private ActionListener evolveAction;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
     public MainView() {
 
@@ -166,29 +154,13 @@ public class MainView {
         this.menuFrame.add(panel);
     }
 
-    public void setSwitchActionEvent (ActionListener switchAction){
-
-        this.switchAction = switchAction;
-        
-    }
-
     public void initializeInventory (){
         JLabel text = new JLabel();
-<<<<<<< Updated upstream
-        JPanel mainPanel = new JPanel(new GridLayout(2,1));
-        creatureListPanel = new JPanel(new GridLayout(0,1));
-        JPanel options = new JPanel(new GridLayout(1,1));
-=======
-<<<<<<< Updated upstream
-        JPanel panel = new JPanel(new BorderLayout());
-=======
+
         JPanel mainPanel = new JPanel(new GridLayout(2,1));
 
         creatureListPanel = new JPanel(new GridLayout(0,1));
         JPanel options = new JPanel(new GridLayout(1,1));
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-
         //add options
         JButton returnBtn = new JButton("Exit Inventory");
         returnBtn.addActionListener(new ActionListener() {
@@ -208,26 +180,16 @@ public class MainView {
         this.inventoryFrame.add(mainPanel);
     }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-    public void createButton (String desc, ActionListener action){
-=======
->>>>>>> Stashed changes
     public void initializeEvolutionMenu(){
         
         JPanel selectionPanel = new JPanel(new GridLayout(1,3));
         evolutionPanel1 = new JPanel(new GridLayout(0,1));
         evolutionPanel2 = new JPanel(new GridLayout(0,1));
-<<<<<<< Updated upstream
-        JPanel buttonPanel = new JPanel(new GridLayout(3,1));
-        
-=======
+
         resultPanel = new JPanel(new GridLayout(1,3));
         JPanel buttonPanel = new JPanel(new GridLayout(3,1));
 
 
->>>>>>> Stashed changes
         JButton returnBtn = new JButton("Return to Menu");
         returnBtn.addActionListener(new ActionListener() {
             @Override
@@ -238,18 +200,12 @@ public class MainView {
             
         });
 
-<<<<<<< Updated upstream
-        JButton evolveBtn = new JButton("Proceed to Evolution");
 
-        buttonPanel.add(new JLabel("Result goes here"));
-        buttonPanel.add(evolveBtn);
-=======
         JButton evolutionBtn = new JButton("Proceed to Evolution");
         evolutionBtn.addActionListener(this.evolveAction);
 
         buttonPanel.add(resultPanel);
         buttonPanel.add(evolutionBtn);
->>>>>>> Stashed changes
         buttonPanel.add(returnBtn);
 
         selectionPanel.add(evolutionPanel1);
@@ -259,10 +215,7 @@ public class MainView {
     }
 
     public void createStarterButton (String desc, ActionListener action){
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+        
         JButton btn = new JButton(desc);
         btn.addActionListener(action);
         btn.addActionListener(new ActionListener() {
@@ -276,11 +229,6 @@ public class MainView {
         this.starterPanel.add(btn);
         this.startFrame.revalidate();
     }
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
     public void reloadInventory (ArrayList<Creature> creatureList){
 
@@ -293,15 +241,9 @@ public class MainView {
     public void generateCreatureEvolutionList1 (ArrayList<Creature> creatureList){
 
         for (int i = 0; i < creatureList.size();i++){
-<<<<<<< Updated upstream
-            JButton switchBtn = new JButton("Select");
-            switchBtn.putClientProperty("index", i);
-            switchBtn.addActionListener(this.switchAction);
-=======
             JButton selectBtn = new JButton("Select");
             selectBtn.putClientProperty("index", i);
             selectBtn.addActionListener(this.selectAction1);
->>>>>>> Stashed changes
             JPanel creaturePanel = new JPanel(new GridLayout(1,3));
             JLabel creatureLbl = new JLabel();
             Creature curCreature = creatureList.get(i);            
@@ -314,11 +256,8 @@ public class MainView {
                                 + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
                                 + "<hr></html></body>");
             
-<<<<<<< Updated upstream
-            creaturePanel.add(switchBtn);
-=======
+
             creaturePanel.add(selectBtn);
->>>>>>> Stashed changes
             creaturePanel.add(creatureLbl);
             creaturePanel.add(creatureImgLbl);
             this.evolutionPanel1.add(creaturePanel);
@@ -329,15 +268,9 @@ public class MainView {
     public void generateCreatureEvolutionList2 (ArrayList<Creature> creatureList){
 
         for (int i = 0; i < creatureList.size();i++){
-<<<<<<< Updated upstream
-            JButton switchBtn = new JButton("Select");
-            switchBtn.putClientProperty("index", i);
-            switchBtn.addActionListener(this.switchAction);
-=======
             JButton selectBtn = new JButton("Select");
             selectBtn.putClientProperty("index", i);
             selectBtn.addActionListener(this.selectAction2);
->>>>>>> Stashed changes
             JPanel creaturePanel = new JPanel(new GridLayout(1,3));
             JLabel creatureLbl = new JLabel();
             Creature curCreature = creatureList.get(i);            
@@ -350,11 +283,8 @@ public class MainView {
                                 + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
                                 + "<hr></html></body>");
             
-<<<<<<< Updated upstream
-            creaturePanel.add(switchBtn);
-=======
+
             creaturePanel.add(selectBtn);
->>>>>>> Stashed changes
             creaturePanel.add(creatureLbl);
             creaturePanel.add(creatureImgLbl);
             this.evolutionPanel2.add(creaturePanel);
@@ -437,10 +367,6 @@ public class MainView {
 
     }
     
-<<<<<<< Updated upstream
-    public void reloadEvolution(ArrayList<Creature> creatureList){
-        
-=======
     public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2, String evoResult){
 
         this.resultPanel.removeAll();
@@ -466,7 +392,6 @@ public class MainView {
             this.resultPanel.add(new JLabel("   Selection 2"));
         }
 
->>>>>>> Stashed changes
         this.evolutionPanel1.removeAll();
         this.generateCreatureEvolutionList1(creatureList);
         this.evolutionPanel2.removeAll();
@@ -475,8 +400,6 @@ public class MainView {
 
     }
 
-<<<<<<< Updated upstream
-=======
     public void setSelectActionEvent1 (ActionListener SelectAction){
 
         this.selectAction1 = SelectAction;
@@ -498,7 +421,5 @@ public class MainView {
         this.evolveAction = evolve;
         
     }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }
 

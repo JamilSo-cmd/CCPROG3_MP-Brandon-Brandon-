@@ -7,11 +7,8 @@
  * @version 2.0
  * 
  */
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.awt.event.*;
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -91,7 +88,8 @@ public class MainController {
                 timer = 0;
                 encounterFlag = false;
                 curMainView.reloadEncounter(enemyCreature, enemyCreature, catchFlag, timer);
-        }};
+            }
+        };
         return action;
     }
 
@@ -105,45 +103,40 @@ public class MainController {
                 // actions to be performed when Encounter starts
                 user1.resetPlayerPos();
                 int level = (Integer) ((JButton) e.getSource()).getClientProperty("level");
-                curMainView.reloadArea(encounterFlag,user1.getPlayerPos(),level);
+                curMainView.reloadArea(encounterFlag, user1.getPlayerPos(), level);
             }
         };
         return action;
     }
 
-    public void checkEncounterEvent(){
+    public void checkEncounterEvent() {
 
         Random rng = new Random();
 
-        if (rng.nextInt(100) >= 40 ){
+        if (rng.nextInt(100) >= 40) {
             this.encounterFlag = true;
-            if(this.mainView.getLevel() == 1){
+            if (this.mainView.getLevel() == 1) {
                 this.enemyCreature = randomCreatureEL1();
-            }
-            else if(this.mainView.getLevel() == 2){
+            } else if (this.mainView.getLevel() == 2) {
                 int value = rng.nextInt(2);
 
-                if (value == 0){
+                if (value == 0) {
                     this.enemyCreature = randomCreatureEL1();
-                }
-                else if (value == 1){
+                } else if (value == 1) {
                     this.enemyCreature = randomCreatureEL2();
                 }
-            }
-            else if(this.mainView.getLevel() == 3){
+            } else if (this.mainView.getLevel() == 3) {
                 int value = rng.nextInt(3);
 
-                if (value == 0){
+                if (value == 0) {
                     this.enemyCreature = randomCreatureEL1();
-                }
-                else if (value == 1){
+                } else if (value == 1) {
                     this.enemyCreature = randomCreatureEL2();
-                }
-                else if (value == 2){
+                } else if (value == 2) {
                     this.enemyCreature = randomCreatureEL3();
                 }
-            System.out.println(enemyCreature.getName() + " checking");
-            startEncounterEvent();
+                System.out.println(enemyCreature.getName() + " checking");
+                startEncounterEvent();
 
             }
         }
@@ -176,7 +169,7 @@ public class MainController {
 
                 user1.moveRight();
                 checkEncounterEvent();
-                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
+                curMainView.reloadArea(encounterFlag, user1.getPlayerPos());
             }
         };
         return action;
@@ -192,7 +185,7 @@ public class MainController {
 
                 user1.moveUp();
                 checkEncounterEvent();
-                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
+                curMainView.reloadArea(encounterFlag, user1.getPlayerPos());
 
             }
         };
@@ -209,7 +202,7 @@ public class MainController {
 
                 user1.moveDown();
                 checkEncounterEvent();
-                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
+                curMainView.reloadArea(encounterFlag, user1.getPlayerPos());
             }
         };
         return action;
@@ -226,7 +219,7 @@ public class MainController {
                 user1.setActiveCreature((Integer) ((JButton) e.getSource()).getClientProperty("index"));
                 swapFlag = true;
                 timer--;
-                if (timer <= 0){
+                if (timer <= 0) {
                     encounterFlag = false;
                 }
                 curMainView.reloadSwap(user1.getPlayerInv().getRoster(), swapFlag);
@@ -262,7 +255,7 @@ public class MainController {
 
                 catchCreature();
                 timer--;
-                if (timer <= 0){
+                if (timer <= 0) {
                     encounterFlag = false;
                 }
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
@@ -295,11 +288,11 @@ public class MainController {
                 // actions to be performed when Encounter starts
                 computeAtk();
                 enemyCreature.takeDamage(atkValue);
-                if (enemyCreature.getHealthPoints() <= 0){
+                if (enemyCreature.getHealthPoints() <= 0) {
                     encounterFlag = false;
                 }
                 timer--;
-                if (timer <= 0){
+                if (timer <= 0) {
                     encounterFlag = false;
                 }
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
@@ -326,7 +319,7 @@ public class MainController {
         this.timer = 3;
         this.catchFlag = false;
         curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
-            
+
     }
 
     private ActionListener openEvoEvent() {

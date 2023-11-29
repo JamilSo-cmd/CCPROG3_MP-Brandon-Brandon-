@@ -10,22 +10,15 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.imageio.ImageIO;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Image;
 
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -56,7 +49,6 @@ public class MainView {
     private JButton rightBtn;
     private JButton upBtn;
     private JButton downBtn;
-    private JButton exploreBtn;
     private JButton evolveBtn;
     private JButton evolutionBtn;
     private ActionListener switchAction;
@@ -82,7 +74,7 @@ public class MainView {
     private JPanel creatureSwapList;
     private ActionListener swappingAction;
     private JPanel mainPanel;
-    private int[][]  tiles;
+    private int[][] tiles;
     private int rows;
     private int columns;
     private ActionListener areaEvent;
@@ -324,33 +316,36 @@ public class MainView {
 
     private void initializeArea(int level) {
 
-
         JFrame initialFrame;
-        
-        switch (level){
-            
-            case 1: initialFrame = this.area1Frame; 
-                    this.level = 1;
-            break;
-            case 2: initialFrame = this.area2Frame; 
-                    this.level = 2; 
-            break;
-            case 3: initialFrame = this.area3Frame; 
-                    this.level = 3; 
-            break;
-            default: initialFrame = this.area1Frame; 
-                    this.level = 1;
+
+        switch (level) {
+
+            case 1:
+                initialFrame = this.area1Frame;
+                this.level = 1;
+                break;
+            case 2:
+                initialFrame = this.area2Frame;
+                this.level = 2;
+                break;
+            case 3:
+                initialFrame = this.area3Frame;
+                this.level = 3;
+                break;
+            default:
+                initialFrame = this.area1Frame;
+                this.level = 1;
 
         }
 
         Area curArea = new Area(level);
-        
+
         this.tiles = curArea.getTiles();
         this.rows = curArea.getRows();
         this.columns = curArea.getColumns();
 
         JPanel actionsPanel = new JPanel(new BorderLayout());
-        this.mainPanel = new JPanel(new GridLayout( this.rows,  this.columns));
+        this.mainPanel = new JPanel(new GridLayout(this.rows, this.columns));
         JPanel returnPanel = new JPanel(new FlowLayout());
 
         this.leftBtn = new JButton("Move Left");
@@ -382,46 +377,46 @@ public class MainView {
         initialFrame.add(returnPanel);
     }
 
-    public void getArea (){
-        
+    public void getArea() {
+
     }
 
-    public void reloadArea(boolean encounterFlag, int[][] playerPos,int level) {
-
+    public void reloadArea(boolean encounterFlag, int[][] playerPos, int level) {
 
         System.out.println(level + "check");
 
-        switch (level){
-            
-            case 1: this.selectAreaFrame = this.area1Frame; 
-                    this.level = 1;
-            break;
-            case 2: this.selectAreaFrame = this.area2Frame; 
-                    this.level = 2; 
-            break;
-            case 3: this.selectAreaFrame = this.area3Frame; 
-                    this.level = 3; 
-            break;
-            default: this.selectAreaFrame = this.area1Frame; 
-                    this.level = 1;
+        switch (level) {
+
+            case 1:
+                this.selectAreaFrame = this.area1Frame;
+                this.level = 1;
+                break;
+            case 2:
+                this.selectAreaFrame = this.area2Frame;
+                this.level = 2;
+                break;
+            case 3:
+                this.selectAreaFrame = this.area3Frame;
+                this.level = 3;
+                break;
+            default:
+                this.selectAreaFrame = this.area1Frame;
+                this.level = 1;
 
         }
         this.selectAreaFrame.setVisible(true);
 
         reloadArea(encounterFlag, playerPos);
     }
-    
 
     public void reloadArea(boolean encounterFlag, int[][] playerPos) {
-        
-        if (encounterFlag == true){
+
+        if (encounterFlag == true) {
 
             this.selectAreaFrame.setVisible(false);
             this.encounterFrame.setVisible(true);
 
         }
-
-        int[][] coordinate;
 
         this.mainPanel.removeAll();
 
@@ -429,7 +424,7 @@ public class MainView {
             for (int x = 0; x < this.tiles[y].length; x++) {
                 JLabel tile = new JLabel();
 
-                if (playerPos[0][0] == x && playerPos[0][1]  == y) {
+                if (playerPos[0][0] == x && playerPos[0][1] == y) {
                     tile.setIcon(this.createImageIcon("./resources/Player.png", "test"));
                 } else {
                     tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
@@ -447,19 +442,19 @@ public class MainView {
 
         this.upBtn.removeActionListener(upAction);
         this.upBtn.addActionListener(upAction);
-        
+
         this.downBtn.removeActionListener(downAction);
         this.downBtn.addActionListener(downAction);
 
         this.selectAreaFrame.revalidate();
 
     }
-    
+
     public int getLevel() {
         return level;
     }
 
-    public void assignOpenAreaEvent(ActionListener openArea){
+    public void assignOpenAreaEvent(ActionListener openArea) {
 
         this.areaEvent = openArea;
 
@@ -554,7 +549,6 @@ public class MainView {
             public void actionPerformed(ActionEvent e) {
                 startFrame.dispose();
                 menuFrame.setVisible(true);
-                // replace frame with the exploration frame
             }
         });
 
@@ -770,7 +764,7 @@ public class MainView {
 
         this.swapBtn.removeActionListener(this.swapAction);
         this.swapBtn.addActionListener(this.swapAction);
-        
+
         this.runBtn.removeActionListener(this.runAction);
         this.runBtn.addActionListener(this.runAction);
 
@@ -784,7 +778,7 @@ public class MainView {
         }
     }
 
-    public void setRunActionEvent (ActionListener run){
+    public void setRunActionEvent(ActionListener run) {
         this.runAction = run;
 
     }
@@ -909,7 +903,7 @@ public class MainView {
 
     }
 
-    public void assignChooseAreaEvent (){
+    public void assignChooseAreaEvent() {
 
         this.area1Btn.putClientProperty("level", 1);
         this.area1Btn.addActionListener(areaEvent);

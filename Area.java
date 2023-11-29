@@ -76,6 +76,16 @@ public class Area {
         };
     }
 
+    /**
+     * sets the number of rows and column tiles for area 2
+     * 
+     * @param tiles
+     *                represents the size of the area
+     * @param rows
+     *                reepresents the number of rows
+     * @param columns
+     *                represents the number of columns
+     */
     private void area2() {
         this.tiles = new int[rows][columns];
         this.tiles = new int[][] {
@@ -85,6 +95,16 @@ public class Area {
         };
     }
 
+    /**
+     * sets the number of rows and column tiles for area 3
+     * 
+     * @param tiles
+     *                represents the size of the area
+     * @param rows
+     *                reepresents the number of rows
+     * @param columns
+     *                represents the number of columns
+     */
     private void area3() {
         this.tiles = new int[rows][columns];
         this.tiles = new int[][] {

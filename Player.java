@@ -52,7 +52,7 @@ public class Player {
     public void setActiveCreature(int index) {
 
         this.activeCreature = playerInv.getCreature(index);
-        Collections.swap(this.playerInv.getRoster(),0,index);
+        Collections.swap(this.playerInv.getRoster(), 0, index);
 
     }
 
@@ -69,7 +69,7 @@ public class Player {
         int currentY = playerPos[0][1];
 
         // Decrease the Y-coordinate to move up
-        if (playerPos[0][1] >= 1){
+        if (playerPos[0][1] >= 1) {
             playerPos[0][1] = currentY - 1;
         }
 
@@ -96,9 +96,9 @@ public class Player {
         int currentY = playerPos[0][1];
 
         // Increase the Y-coordinate to move down
-        if (playerPos[0][1] <= 2){
+        if (playerPos[0][1] <= 2) {
             playerPos[0][1] = currentY + 1;
-        }   
+        }
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
 
@@ -121,8 +121,8 @@ public class Player {
         int currentX = playerPos[0][0];
 
         // Decrease the X-coordinate to move left
-        if (playerPos[0][0] >= 1){
-        playerPos[0][0] = currentX - 1;
+        if (playerPos[0][0] >= 1) {
+            playerPos[0][0] = currentX - 1;
         }
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -146,7 +146,7 @@ public class Player {
         int currentX = playerPos[0][0];
 
         // Increase the X-coordinate to move right
-        if (playerPos[0][0] <= 2){
+        if (playerPos[0][0] <= 2) {
             playerPos[0][0] = currentX + 1;
         }
         // Roll a random number between 1 and 100
@@ -219,6 +219,12 @@ public class Player {
         return this.activeCreature;
     }
 
+    /**
+     * gets the current player's inventory
+     * 
+     * @return
+     *         the player inventory
+     */
     public Inventory getPlayerInv() {
         return playerInv;
     }

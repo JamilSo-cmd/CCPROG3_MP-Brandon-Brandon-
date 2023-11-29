@@ -10,22 +10,15 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.imageio.ImageIO;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Image;
 
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -56,7 +49,6 @@ public class MainView {
     private JButton rightBtn;
     private JButton upBtn;
     private JButton downBtn;
-    private JButton exploreBtn;
     private JButton evolveBtn;
     private JButton evolutionBtn;
     private ActionListener switchAction;
@@ -389,8 +381,6 @@ public class MainView {
     public void reloadArea(boolean encounterFlag, int[][] playerPos,int level) {
 
 
-        System.out.println(level + "check");
-
         switch (level){
             
             case 1: this.selectAreaFrame = this.area1Frame; 
@@ -420,8 +410,6 @@ public class MainView {
             this.encounterFrame.setVisible(true);
 
         }
-
-        int[][] coordinate;
 
         this.mainPanel.removeAll();
 

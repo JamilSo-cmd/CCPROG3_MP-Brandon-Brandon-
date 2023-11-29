@@ -69,7 +69,9 @@ public class Player {
         int currentY = playerPos[0][1];
 
         // Decrease the Y-coordinate to move up
-        playerPos[0][1] = currentY - 1;
+        if (playerPos[0][1] >= 1){
+            playerPos[0][1] = currentY - 1;
+        }
 
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
@@ -94,8 +96,9 @@ public class Player {
         int currentY = playerPos[0][1];
 
         // Increase the Y-coordinate to move down
-        playerPos[0][1] = currentY + 1;
-
+        if (playerPos[0][1] <= 2){
+            playerPos[0][1] = currentY + 1;
+        }   
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
 
@@ -118,8 +121,9 @@ public class Player {
         int currentX = playerPos[0][0];
 
         // Decrease the X-coordinate to move left
+        if (playerPos[0][0] >= 1){
         playerPos[0][0] = currentX - 1;
-
+        }
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
 
@@ -142,8 +146,9 @@ public class Player {
         int currentX = playerPos[0][0];
 
         // Increase the X-coordinate to move right
-        playerPos[0][0] = currentX + 1;
-
+        if (playerPos[0][0] <= 2){
+            playerPos[0][0] = currentX + 1;
+        }
         // Roll a random number between 1 and 100
         int randomNum = new Random().nextInt(100) + 1;
 

@@ -7,11 +7,8 @@
  * @version 2.0
  * 
  */
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.awt.event.*;
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -82,7 +79,6 @@ public class MainController {
 
     private ActionListener runActionEvent() {
         MainView curMainView = this.mainView;
-        Player user1 = this.user;
 
         ActionListener action = new ActionListener() {
             @Override
@@ -142,7 +138,6 @@ public class MainController {
                 else if (value == 2){
                     this.enemyCreature = randomCreatureEL3();
                 }
-            System.out.println(enemyCreature.getName() + " checking");
             startEncounterEvent();
 
             }
@@ -397,7 +392,6 @@ public class MainController {
                         .get((Integer) ((JButton) e.getSource()).getClientProperty("index")));
                 curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
                         evolutionResult);
-                System.out.println(creatureSelect1.getName());
             }
         };
         return action;
@@ -415,7 +409,6 @@ public class MainController {
                         .get((Integer) ((JButton) e.getSource()).getClientProperty("index")));
                 curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
                         evolutionResult);
-                System.out.println(creatureSelect2.getName());
 
             }
         };
@@ -513,7 +506,7 @@ public class MainController {
                             else if (creatureSelect1.getEvolutionLv() == 2) {
 
                                 user1.getPlayerInv().getRoster()
-                                        .add(new EL3("Piestoise", "Water", 'G', 3, "./resources/Piestoise.png"));
+                                        .add(new EL3("Piestoise", "Water", 'G', 3, "./resources/Piestoise.jpg"));
 
                             }
 

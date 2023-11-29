@@ -30,22 +30,27 @@ public class MainController {
     protected boolean swapFlag;
     protected int timer;
 
-    public MainController(){
+    public MainController() {
 
         this.user = new Player(new Inventory());
 
         this.mainView = new MainView();
 
-        this.mainView.createStarterButton("Strawander", pickStarterEvent("Strawander", "Fire", 'A', 1,"./resources/Strawander.jpg"));
-        this.mainView.createStarterButton("Brownisaur", pickStarterEvent("Brownisaur", "Grass", 'D',1,"./resources/Brownisaur.png"));
-        this.mainView.createStarterButton("Squirpie", pickStarterEvent("Squirpie", "Water", 'G', 1,"./resources/Squirpie.jpg"));
-        
+        this.mainView.createStarterButton("Strawander",
+                pickStarterEvent("Strawander", "Fire", 'A', 1, "./resources/Strawander.jpg"));
+        this.mainView.createStarterButton("Brownisaur",
+                pickStarterEvent("Brownisaur", "Grass", 'D', 1, "./resources/Brownisaur.png"));
+        this.mainView.createStarterButton("Squirpie",
+                pickStarterEvent("Squirpie", "Water", 'G', 1, "./resources/Squirpie.jpg"));
+
         this.mainView.assignOpenInvEvent(openInvEvent());
-        
+
         this.mainView.setSwitchActionEvent(switchCreatureEvent());
 
         this.mainView.assignOpenEvoEvent(openEvoEvent());
-        
+
+        this.mainView.assignChooseAreaEvent(chooseAreaEvent());
+
         this.mainView.setSelectActionEvent1(selectCreatureEvent1());
 
         this.mainView.setSelectActionEvent2(selectCreatureEvent2());
@@ -53,30 +58,43 @@ public class MainController {
         this.mainView.setEvolutionActionEvent(evolutionEvent());
 
         this.mainView.assignStartEncounterEvent(startEncounterEvent());
-        
+
         this.mainView.setAttackActionEvent(attackEvent());
 
         this.mainView.setCatchActionEvent(captureEvent());
 
         this.mainView.assignSwapEvent(swapEvent());
-        
+
         this.mainView.setSwappingActionEvent(swapCreatureEvent());
-    }   
+    }
+
+    private ActionListener chooseAreaEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // actions to be performed when Encounter starts
+            }
+        };
+        return action;
+    }
 
     private ActionListener swapCreatureEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //actions to be performed when Encounter starts
-                user1.setActiveCreature((Integer)((JButton)e.getSource()).getClientProperty( "index" ));
+                // actions to be performed when Encounter starts
+                user1.setActiveCreature((Integer) ((JButton) e.getSource()).getClientProperty("index"));
                 swapFlag = true;
                 timer--;
                 curMainView.reloadSwap(user1.getPlayerInv().getRoster(), swapFlag);
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
-            }};
+            }
+        };
         return action;
     }
 
@@ -84,39 +102,40 @@ public class MainController {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //actions to be performed when Encounter starts
+                // actions to be performed when Encounter starts
                 swapFlag = false;
-                curMainView.reloadSwap(user1.getPlayerInv().getRoster(),swapFlag);
-            }};
+                curMainView.reloadSwap(user1.getPlayerInv().getRoster(), swapFlag);
+            }
+        };
         return action;
     }
 
     private ActionListener captureEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
-       
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //actions to be performed when Encounter starts
+                // actions to be performed when Encounter starts
 
                 catchCreature();
                 timer--;
-                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag,timer);
-            }};
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
+            }
+        };
         return action;
     }
 
     private void catchCreature() {
         Player user1 = this.user;
 
-        int catchRate = (40+50) - enemyCreature.getHealthPoints();
+        int catchRate = (40 + 50) - enemyCreature.getHealthPoints();
 
-        if (user1.catchCreature() >= catchRate){
+        if (user1.catchCreature() >= catchRate) {
 
             user1.addToInventory(enemyCreature);
             this.catchFlag = true;
@@ -128,26 +147,27 @@ public class MainController {
     private ActionListener attackEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
-       
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //actions to be performed when Encounter starts
+                // actions to be performed when Encounter starts
                 computeAtk();
                 enemyCreature.takeDamage(atkValue);
                 timer--;
-                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag,timer);
-            }};
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
+            }
+        };
         return action;
     }
 
-    private void computeAtk(){
+    private void computeAtk() {
         Player user1 = this.user;
-        
+
         Creature ActiveCreature = user1.getActiveCreature();
-        boolean typeAdvantage = user1.getActiveCreature().typeAdvantage(ActiveCreature.getType(), enemyCreature.getType());
-        
+        boolean typeAdvantage = user1.getActiveCreature().typeAdvantage(ActiveCreature.getType(),
+                enemyCreature.getType());
+
         this.atkValue = user1.getActiveCreature().attack(typeAdvantage);
 
     }
@@ -156,16 +176,17 @@ public class MainController {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //actions to be performed when Encounter starts
+                // actions to be performed when Encounter starts
                 enemyCreature = randomCreatureEL1();
                 timer = 3;
                 catchFlag = false;
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
-            }};
+            }
+        };
         return action;
     }
 
@@ -173,26 +194,28 @@ public class MainController {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(),creatureSelect1,creatureSelect2,evolutionResult);
-            }};
+                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
+                        evolutionResult);
+            }
+        };
         return action;
     }
 
-    private ActionListener pickStarterEvent(String name, String type, char family,int evolutionLv,String imagePath){
+    private ActionListener pickStarterEvent(String name, String type, char family, int evolutionLv, String imagePath) {
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user1.addToInventory(new EL1(name,type,family,evolutionLv,imagePath));
-                user1.setActiveCreature(0); 
+                user1.addToInventory(new EL1(name, type, family, evolutionLv, imagePath));
+                user1.setActiveCreature(0);
 
-                //TODO: Remove after testing
-                user1.addToInventory(new EL1("Squirpie", "Water", 'G', 1,"./resources/Squirpie.jpg"));
-                user1.addToInventory(new EL1("Strawander", "Fire", 'A', 1,"./resources/Strawander.jpg"));
+                // TODO: Remove after testing
+                user1.addToInventory(new EL1("Squirpie", "Water", 'G', 1, "./resources/Squirpie.jpg"));
+                user1.addToInventory(new EL1("Strawander", "Fire", 'A', 1, "./resources/Strawander.jpg"));
 
             }
         };
@@ -200,13 +223,11 @@ public class MainController {
         return action;
     }
 
-
-
-    private ActionListener openInvEvent () {
+    private ActionListener openInvEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 curMainView.reloadInventory(user1.getPlayerInv().getRoster());
@@ -216,64 +237,69 @@ public class MainController {
         return action;
     }
 
-    private ActionListener switchCreatureEvent (){
+    private ActionListener switchCreatureEvent() {
         Player user1 = this.user;
         MainView curMainView = this.mainView;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                user1.setActiveCreature((Integer)((JButton)e.getSource()).getClientProperty( "index" ));
+                user1.setActiveCreature((Integer) ((JButton) e.getSource()).getClientProperty("index"));
                 curMainView.reloadInventory(user1.getPlayerInv().getRoster());
             }
         };
         return action;
     }
-    
-    private ActionListener selectCreatureEvent1(){
+
+    private ActionListener selectCreatureEvent1() {
         Player user1 = this.user;
         MainView curMainView = this.mainView;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                index1 = (Integer)((JButton)e.getSource()).getClientProperty( "index" );
-                setCreatureSelect1(user1.getPlayerInv().getRoster().get((Integer)((JButton)e.getSource()).getClientProperty( "index" )));
-                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(),creatureSelect1,creatureSelect2,evolutionResult);
+                index1 = (Integer) ((JButton) e.getSource()).getClientProperty("index");
+                setCreatureSelect1(user1.getPlayerInv().getRoster()
+                        .get((Integer) ((JButton) e.getSource()).getClientProperty("index")));
+                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
+                        evolutionResult);
                 System.out.println(creatureSelect1.getName());
             }
         };
         return action;
     }
 
-     private ActionListener selectCreatureEvent2(){
+    private ActionListener selectCreatureEvent2() {
         Player user1 = this.user;
         MainView curMainView = this.mainView;
 
-        ActionListener action = new ActionListener(){
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                index2 = (Integer)((JButton)e.getSource()).getClientProperty( "index" );
-                setCreatureSelect2(user1.getPlayerInv().getRoster().get((Integer)((JButton)e.getSource()).getClientProperty( "index" )));
-                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(),creatureSelect1,creatureSelect2,evolutionResult);
+                index2 = (Integer) ((JButton) e.getSource()).getClientProperty("index");
+                setCreatureSelect2(user1.getPlayerInv().getRoster()
+                        .get((Integer) ((JButton) e.getSource()).getClientProperty("index")));
+                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
+                        evolutionResult);
                 System.out.println(creatureSelect2.getName());
-                
+
             }
         };
         return action;
     }
 
-    private ActionListener evolutionEvent(){
+    private ActionListener evolutionEvent() {
         Player user1 = this.user;
         MainView curMainView = this.mainView;
-        
-        ActionListener action = new ActionListener(){
+
+        ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 evolveCreature();
 
-                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(),creatureSelect1,creatureSelect2, evolutionResult);
+                curMainView.reloadEvolution(user1.getPlayerInv().getRoster(), creatureSelect1, creatureSelect2,
+                        evolutionResult);
             }
         };
         return action;
@@ -287,177 +313,202 @@ public class MainController {
         this.creatureSelect2 = creatureSelect2;
     }
 
-    public void evolveCreature (){
-         Player user1 = this.user;
+    public void evolveCreature() {
+        Player user1 = this.user;
 
-        if (index1 == index2){
-                evolutionResult = "Cannot use same Creature";
-        }
-        else{
+        if (index1 == index2) {
+            evolutionResult = "Cannot use same Creature";
+        } else {
 
-            if (creatureSelect1.getFamily() != creatureSelect2.getFamily()){
+            if (creatureSelect1.getFamily() != creatureSelect2.getFamily()) {
                 evolutionResult = "Not the same Family";
-            }
-            else {
+            } else {
 
-                if(creatureSelect1.getEvolutionLv() >= 3 || creatureSelect2.getEvolutionLv() >= 3 || creatureSelect1.getEvolutionLv() != creatureSelect2.getEvolutionLv()){
+                if (creatureSelect1.getEvolutionLv() >= 3 || creatureSelect2.getEvolutionLv() >= 3
+                        || creatureSelect1.getEvolutionLv() != creatureSelect2.getEvolutionLv()) {
                     evolutionResult = "Different Evolution Lv";
-                }
-                else{
-                    switch (creatureSelect1.getFamily()){
+                } else {
+                    switch (creatureSelect1.getFamily()) {
 
-                        case 'A':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-                                user1.getPlayerInv().getRoster().add(new EL2("Strawleon","Fire" ,'A' ,2 ,"./resources/Strawleon.png" ));
+                        case 'A': {
 
-                            }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
-
-                                user1.getPlayerInv().getRoster().add(new EL3("Stawizard","Fire" ,'A' ,3 ,"./resources/Stawizard.png" ));
+                            if (creatureSelect1.getEvolutionLv() == 1) {
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Strawleon", "Fire", 'A', 2, "./resources/Strawleon.png"));
 
                             }
-                            
-                        };
-                        break;
-                        case 'D':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
 
-                                user1.getPlayerInv().getRoster().add(new EL2("Chocosaur","Grass" ,'D' ,2 ,"./resources/Chocosaur.png" ));
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Stawizard", "Fire", 'A', 3, "./resources/Stawizard.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Fudgasaur","Grass" ,'D' ,3 ,"./resources/Fudgasaur.png" ));
+                        }
+                            ;
+                            break;
+                        case 'D': {
 
-                            }
-                            
-                        };
-                        break;
-                        case 'G':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
+                            if (creatureSelect1.getEvolutionLv() == 1) {
 
-                                user1.getPlayerInv().getRoster().add(new EL2("Tartortle","Water" ,'G' ,2 ,"./resources/Tartortle.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Chocosaur", "Grass", 'D', 2, "./resources/Chocosaur.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Piestoise","Water" ,'G' ,3 ,"./resources/Piestoise.png" ));
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
 
-                            }
-                            
-                        };
-                        break;
-                        case 'H':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new EL2("Chocolish","Water" ,'H' ,2 ,"./resources/Chocolish.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Fudgasaur", "Grass", 'D', 3, "./resources/Fudgasaur.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Icesundae","Water" ,'H' ,3 ,"./resources/Icesundae.png" ));
+                        }
+                            ;
+                            break;
+                        case 'G': {
 
-                            }
-                            
-                        };
-                        case 'I':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
+                            if (creatureSelect1.getEvolutionLv() == 1) {
 
-                                user1.getPlayerInv().getRoster().add(new EL2("Dewice","Water" ,'I' ,2 ,"./resources/Dewice.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Tartortle", "Water", 'G', 2, "./resources/Tartortle.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Samurcone","Water" ,'I' ,3 ,"./resources/Samurcone.png" ));
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
 
-                            }
-                            
-                        };
-                        break;
-
-                        case 'F':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new EL2("Kirlicake","Grass" ,'F' ,2 ,"./resources/Kirlicake.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Piestoise", "Water", 'G', 3, "./resources/Piestoise.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Velvevoir","Grass" ,'F' ,3 ,"./resources/Velvevoir.png" ));
+                        }
+                            ;
+                            break;
+                        case 'H': {
 
-                            }
-                            
-                        };
-                        break;
+                            if (creatureSelect1.getEvolutionLv() == 1) {
 
-                        case 'E':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new EL2("Golberry","Grass" ,'E' ,2 ,"./resources/Golberry.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Chocolish", "Water", 'H', 2, "./resources/Chocolish.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Croberry","Grass" ,'E' ,3 ,"./resources/Croberry.png" ));
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
 
-                            }
-                            
-                        };
-                        break;
-
-                        case 'B':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new EL2("Chocofluff","Fire" ,'B' ,2 ,"./resources/Chocofluff.png" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Icesundae", "Water", 'H', 3, "./resources/Icesundae.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Candaros","Fire" ,'B' ,3 ,"./resources/Candaros.png" ));
+                        }
+                            ;
+                        case 'I': {
 
-                            }
-                            
-                        };
-                        break;
+                            if (creatureSelect1.getEvolutionLv() == 1) {
 
-                        case 'C':{
-                        
-                            if (creatureSelect1.getEvolutionLv() == 1){
-
-                                user1.getPlayerInv().getRoster().add(new EL2("Parfure","Fire" ,'C' ,2 ,"./resources/Parfure.jpg" ));
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Dewice", "Water", 'I', 2, "./resources/Dewice.png"));
 
                             }
-                            
-                            else if (creatureSelect1.getEvolutionLv() == 2){
 
-                                user1.getPlayerInv().getRoster().add(new EL3("Parfelure","Fire" ,'C' ,3 ,"./resources/Parfelure.jpg" ));
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Samurcone", "Water", 'I', 3, "./resources/Samurcone.png"));
 
                             }
-                            
-                        };
-                        break;
+
+                        }
+                            ;
+                            break;
+
+                        case 'F': {
+
+                            if (creatureSelect1.getEvolutionLv() == 1) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Kirlicake", "Grass", 'F', 2, "./resources/Kirlicake.png"));
+
+                            }
+
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Velvevoir", "Grass", 'F', 3, "./resources/Velvevoir.png"));
+
+                            }
+
+                        }
+                            ;
+                            break;
+
+                        case 'E': {
+
+                            if (creatureSelect1.getEvolutionLv() == 1) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Golberry", "Grass", 'E', 2, "./resources/Golberry.png"));
+
+                            }
+
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Croberry", "Grass", 'E', 3, "./resources/Croberry.png"));
+
+                            }
+
+                        }
+                            ;
+                            break;
+
+                        case 'B': {
+
+                            if (creatureSelect1.getEvolutionLv() == 1) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Chocofluff", "Fire", 'B', 2, "./resources/Chocofluff.png"));
+
+                            }
+
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Candaros", "Fire", 'B', 3, "./resources/Candaros.png"));
+
+                            }
+
+                        }
+                            ;
+                            break;
+
+                        case 'C': {
+
+                            if (creatureSelect1.getEvolutionLv() == 1) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL2("Parfure", "Fire", 'C', 2, "./resources/Parfure.jpg"));
+
+                            }
+
+                            else if (creatureSelect1.getEvolutionLv() == 2) {
+
+                                user1.getPlayerInv().getRoster()
+                                        .add(new EL3("Parfelure", "Fire", 'C', 3, "./resources/Parfelure.jpg"));
+
+                            }
+
+                        }
+                            ;
+                            break;
                     }
 
                     user1.getPlayerInv().getRoster().remove(index1);
                     user1.getPlayerInv().getRoster().remove(index2);
 
-                    if (index1 == 0 || index2 == 0){
+                    if (index1 == 0 || index2 == 0) {
                         user1.setActiveCreature(0);
                     }
 
@@ -470,7 +521,6 @@ public class MainController {
             }
         }
 
-        
     }
 
     /**
@@ -531,7 +581,7 @@ public class MainController {
 
         } else if ("Squirpie".equals(randomName) || "Chocolite".equals(randomName) || "Oshacone".equals(randomName)) {
             creatureType = "Water";
-            
+
             int i = 0;
             while (i < names.length) {
 
@@ -570,7 +620,6 @@ public class MainController {
         if ("Strawleon".equals(randomName) || "Chocofluff".equals(randomName) || "Parfure".equals(randomName)) {
             creatureType = "Fire";
 
-            
             int i = 0;
             while (i < names.length) {
 

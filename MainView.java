@@ -35,13 +35,21 @@ public class MainView {
     private JFrame startFrame;
     private JFrame menuFrame;
     private JFrame inventoryFrame;
-    private JFrame exploreFrame;
+    private JFrame chooseAreaFrame;
+    private JFrame area1Frame;
+    private JFrame area2Frame;
+    private JFrame area3Frame;
     private JFrame evolutionFrame;
     private JFrame encounterFrame;
     private JPanel creatureListPanel;
     private JPanel starterPanel;
+    private JPanel chooseExplorePanel;
     private JPanel statusPanel;
     private JButton inventoryBtn;
+    private JButton chooseExploreBtn;
+    private JButton area1Btn;
+    private JButton area2Btn;
+    private JButton area3Btn;
     private JButton exploreBtn;
     private JButton evolveBtn;
     private JButton evolutionBtn;
@@ -93,14 +101,14 @@ public class MainView {
 
         this.inventoryFrame.setVisible(false);
 
-        this.exploreFrame = new JFrame("Explore");
-        this.exploreFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.exploreFrame.setLayout(new FlowLayout());
-        this.exploreFrame.setSize(1500, 800);
-        this.exploreFrame.setLocationRelativeTo(null);
+        this.chooseAreaFrame = new JFrame("Explore");
+        this.chooseAreaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.chooseAreaFrame.setLayout(new FlowLayout());
+        this.chooseAreaFrame.setSize(800, 300);
+        this.chooseAreaFrame.setLocationRelativeTo(null);
         initializeChooseAreaMenu();
 
-        this.exploreFrame.setVisible(false);
+        this.chooseAreaFrame.setVisible(false);
 
         this.evolutionFrame = new JFrame("Evolution");
         this.evolutionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,7 +118,7 @@ public class MainView {
 
         initializeEvolutionMenu();
         this.evolutionFrame.setVisible(false);
-        
+
         this.encounterFrame = new JFrame("An Encounter Has Appeared!");
         this.encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.encounterFrame.setLayout(new FlowLayout());
@@ -161,12 +169,13 @@ public class MainView {
                 inventoryFrame.setVisible(true);
             }
         });
-        this.exploreBtn = new JButton("Explore an Area");
-        this.exploreBtn.addActionListener(new ActionListener() {
+        this.chooseExploreBtn = new JButton("Explore an Area");
+        this.chooseExploreBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
-                
+                chooseAreaFrame.setVisible(true);
+
                 // encounterFrame.setVisible(true); (for testing encounter)
                 // // replace frame with exploreframe
             }
@@ -190,7 +199,7 @@ public class MainView {
         });
 
         panel.add(this.inventoryBtn, BorderLayout.EAST);
-        panel.add(exploreBtn, BorderLayout.CENTER);
+        panel.add(chooseExploreBtn, BorderLayout.CENTER);
         panel.add(evolveBtn, BorderLayout.WEST);
         panel.add(exitBtn, BorderLayout.SOUTH);
 
@@ -220,16 +229,64 @@ public class MainView {
     }
 
     public void initializeChooseAreaMenu() {
+        JLabel chooseAreaLbl = new JLabel();
+        JPanel mainPanel = new JPanel(new FlowLayout(1, 9, 20));
 
-        
+        chooseAreaLbl.setText("<html><h2>Which Area will you go to?</h2></html>");
+        chooseAreaLbl.setHorizontalAlignment(JLabel.CENTER);
 
+        this.chooseExplorePanel = new JPanel(new GridLayout(3, 3));
+
+        JButton returnBtn = new JButton("Go Back to Main Menu");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseAreaFrame.setVisible(false);
+                menuFrame.setVisible(true);
+            }
+        });
+
+        this.area1Btn = new JButton("Area 1");
+        this.area1Btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseAreaFrame.setVisible(false);
+                area1Frame.setVisible(true);
+            }
+        });
+
+        this.area2Btn = new JButton("Area 2");
+        this.area2Btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseAreaFrame.setVisible(false);
+                area2Frame.setVisible(true);
+            }
+        });
+
+        this.area3Btn = new JButton("Area 3");
+        this.area3Btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseAreaFrame.setVisible(false);
+                area3Frame.setVisible(true);
+            }
+        });
+
+        mainPanel.add(chooseAreaLbl);
+        mainPanel.add(chooseExplorePanel);
+        mainPanel.add(area1Btn);
+        mainPanel.add(area2Btn);
+        mainPanel.add(area3Btn);
+        mainPanel.add(returnBtn);
+        this.chooseAreaFrame.add(mainPanel);
     }
 
-    public void initializeEncounterScreen(){
+    public void initializeEncounterScreen() {
 
-        JPanel mainEncounterPanel = new JPanel(new GridLayout(2,1));
-        JPanel encounterBtnPanel = new JPanel(new GridLayout(1,4));
-        this.statusPanel = new JPanel(new GridLayout(1,3));
+        JPanel mainEncounterPanel = new JPanel(new GridLayout(2, 1));
+        JPanel encounterBtnPanel = new JPanel(new GridLayout(1, 4));
+        this.statusPanel = new JPanel(new GridLayout(1, 3));
 
         JButton returnBtn = new JButton("Run Away");
         returnBtn.addActionListener(new ActionListener() {
@@ -239,7 +296,7 @@ public class MainView {
                 menuFrame.setVisible(true);
             }
 
-        }); 
+        });
 
         this.attackBtn = new JButton("Attack");
         this.swapBtn = new JButton("Swap");
@@ -325,7 +382,7 @@ public class MainView {
     public void setEvolutionActionEvent(ActionListener evolve) {
 
         this.evolveAction = evolve;
-        
+
     }
 
     public void reloadInventory(ArrayList<Creature> creatureList) {
@@ -461,15 +518,20 @@ public class MainView {
         this.evolveBtn.addActionListener(action);
 
     }
-    
-    //TODO: revise when area frame is done
+
+    public void assignChooseAreaEvent(ActionListener action) {
+        this.chooseExploreBtn.addActionListener(action);
+    }
+
+    // TODO: revise when area frame is done
     public void assignStartEncounterEvent(ActionListener action) {
 
         this.exploreBtn.addActionListener(action);
 
     }
 
-    public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2,String evoResult) {
+    public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2,
+            String evoResult) {
 
         this.resultPanel.removeAll();
 
@@ -506,7 +568,7 @@ public class MainView {
 
     }
 
-    public void reloadEncounter(Creature activeCreature, Creature enemy, boolean catchFlag, int timer){
+    public void reloadEncounter(Creature activeCreature, Creature enemy, boolean catchFlag, int timer) {
 
         this.statusPanel.removeAll();
         JLabel selectImgLbl = new JLabel();
@@ -517,13 +579,13 @@ public class MainView {
         JLabel enemyStat = new JLabel();
 
         enemyStat.setText("<html><body>Name: " + enemy.getName()
-                    + "<br>Family: " + enemy.getFamily()
-                    + "<br>Evolution Lv: " + enemy.getEvolutionLv()
-                    + "<br>Current HP: " + enemy.getHealthPoints()
-                    + "<hr></html></body>");
+                + "<br>Family: " + enemy.getFamily()
+                + "<br>Evolution Lv: " + enemy.getEvolutionLv()
+                + "<br>Current HP: " + enemy.getHealthPoints()
+                + "<hr></html></body>");
 
         this.statusPanel.add(enemyStat);
-        
+
         JLabel enemyImg = new JLabel();
         enemyImg.setIcon(this.createImageIcon(enemy.getImagePath(), "Enemy Creature"));
         this.statusPanel.add(enemyImg);
@@ -539,7 +601,7 @@ public class MainView {
 
         this.encounterFrame.revalidate();
 
-        if (enemy.getHealthPoints() <= 0 || catchFlag == true || timer <= 0){
+        if (enemy.getHealthPoints() <= 0 || catchFlag == true || timer <= 0) {
 
             this.menuFrame.setVisible(true);
             this.encounterFrame.setVisible(false);
@@ -547,7 +609,7 @@ public class MainView {
         }
     }
 
-    public void generateSwappingList (ArrayList<Creature> creatureList){
+    public void generateSwappingList(ArrayList<Creature> creatureList) {
 
         JLabel curActiveLbl = new JLabel("<html><h3>Currently Active</h3></html>");
         JPanel activeCreaturePanel = new JPanel(new GridLayout(1, 3));
@@ -589,13 +651,14 @@ public class MainView {
             this.creatureSwapList.add(creaturePanel);
         }
     }
-    public void reloadSwap (ArrayList<Creature> creatureList, boolean swapFlag){
+
+    public void reloadSwap(ArrayList<Creature> creatureList, boolean swapFlag) {
 
         this.creatureSwapList.removeAll();
         this.generateSwappingList(creatureList);
         this.swapFrame.revalidate();
 
-        if (swapFlag == true){
+        if (swapFlag == true) {
             this.swapFrame.setVisible(false);
             this.encounterFrame.setVisible(true);
         }
@@ -618,27 +681,27 @@ public class MainView {
 
     }
 
-    public void setAttackActionEvent(ActionListener attack){
+    public void setAttackActionEvent(ActionListener attack) {
 
         this.attackAction = attack;
 
     }
-    
-    public void setCatchActionEvent(ActionListener capture){
+
+    public void setCatchActionEvent(ActionListener capture) {
 
         this.catchAction = capture;
 
     }
 
-    public void assignSwapEvent(ActionListener swap){
+    public void assignSwapEvent(ActionListener swap) {
 
         this.swapAction = swap;
 
     }
 
-    public void setSwappingActionEvent(ActionListener swapping){
+    public void setSwappingActionEvent(ActionListener swapping) {
 
-        this.swappingAction  = swapping;
+        this.swappingAction = swapping;
 
     }
 

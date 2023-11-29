@@ -48,18 +48,18 @@ public class Area {
             area1();
         }
         // Area 2 and 3
-        
+
         else if (level == 2) {
-        this.rows = 3;
-        this.columns = 3;
-        area2();
-        
+            this.rows = 3;
+            this.columns = 3;
+            area2();
+
         } else if (level == 3) {
-        this.rows = 4;
-        this.columns = 4;
-        area3();
+            this.rows = 4;
+            this.columns = 4;
+            area3();
         }
-        
+
     }
 
     /**
@@ -100,6 +100,7 @@ public class Area {
     }
 
     private void area2() {
+        this.tiles = new int[rows][columns];
         this.tiles = new int[][] {
                 { 0, 0, 0 },
                 { 0, 0, 0 },
@@ -108,6 +109,7 @@ public class Area {
     }
 
     private void area3() {
+        this.tiles = new int[rows][columns];
         this.tiles = new int[][] {
                 { 0, 0, 0, 0 },
                 { 0, 0, 0, 0 },

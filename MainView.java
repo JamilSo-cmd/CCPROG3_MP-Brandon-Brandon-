@@ -177,6 +177,10 @@ public class MainView {
 
     }
 
+    /**
+     * initializes the first frame for choosing the starter
+     * 
+     */
     private void starterPick() {
         JLabel greetingsPromptLbl = new JLabel();
         JPanel mainPanel = new JPanel(new GridLayout(2, 1));
@@ -193,6 +197,10 @@ public class MainView {
         this.startFrame.add(mainPanel);
     }
 
+    /**
+     * initializes the GUI for the main menu
+     * 
+     */
     private void initializeMenu() {
         JLabel menu = new JLabel();
         JPanel panel = new JPanel(new BorderLayout());
@@ -242,6 +250,10 @@ public class MainView {
         this.menuFrame.add(panel);
     }
 
+    /**
+     * initializes the inventoryFrame
+     * 
+     */
     public void initializeInventory() {
 
         JPanel mainPanel = new JPanel(new GridLayout(1, 1));
@@ -263,6 +275,10 @@ public class MainView {
         this.inventoryFrame.add(mainPanel);
     }
 
+    /**
+     * initializes the ChooseAreaFrame
+     * 
+     */
     public void initializeChooseAreaMenu() {
         JLabel chooseAreaLbl = new JLabel();
         JPanel mainPanel = new JPanel(new FlowLayout(1, 9, 20));
@@ -314,6 +330,13 @@ public class MainView {
         this.chooseAreaFrame.add(mainPanel);
     }
 
+    /**
+     * initializes a specific area from 1-3
+     * 
+     * @param level
+     *              determines the area level to be initialized
+     * 
+     */
     private void initializeArea(int level) {
 
         JFrame initialFrame;
@@ -377,10 +400,16 @@ public class MainView {
         initialFrame.add(returnPanel);
     }
 
-    public void getArea() {
-
-    }
-
+    /**
+     * refreshes the current area to handle player position updates
+     * 
+     * @param encounterFlag
+     *                      checks whether there is an encounter or not
+     * @param playerPos
+     *                      represents the current x and y coordinate of the player
+     * @param level
+     *                      represents the area level
+     */
     public void reloadArea(boolean encounterFlag, int[][] playerPos, int level) {
 
         System.out.println(level + "check");
@@ -409,6 +438,15 @@ public class MainView {
         reloadArea(encounterFlag, playerPos);
     }
 
+    /**
+     * refreshes the current area to handle an instance of an encounter ocurring
+     * 
+     * @param encounterFlag
+     *                      checks whether there is an encounter or not
+     * @param playerPos
+     *                      represents the current x and y coordinate of the player
+     * 
+     */
     public void reloadArea(boolean encounterFlag, int[][] playerPos) {
 
         if (encounterFlag == true) {
@@ -450,16 +488,31 @@ public class MainView {
 
     }
 
+    /**
+     * getter for the area level
+     * 
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * assigns an open area event
+     * 
+     * @param openArea
+     *                 actionListener for entering an area
+     * 
+     */
     public void assignOpenAreaEvent(ActionListener openArea) {
 
         this.areaEvent = openArea;
 
     }
 
+    /**
+     * initializes the encounter frame
+     * 
+     */
     public void initializeEncounterScreen() {
 
         JPanel mainEncounterPanel = new JPanel(new GridLayout(2, 1));
@@ -500,6 +553,10 @@ public class MainView {
 
     }
 
+    /**
+     * Initializes the swap frame
+     * 
+     */
     private void initializeSwapScreen() {
         JPanel mainPanel = new JPanel(new GridLayout(1, 1));
 
@@ -509,6 +566,10 @@ public class MainView {
         this.swapFrame.add(mainPanel);
     }
 
+    /**
+     * Initializes the evolution frame
+     * 
+     */
     public void initializeEvolutionMenu() {
 
         JPanel selectionPanel = new JPanel(new GridLayout(1, 3));
@@ -540,6 +601,15 @@ public class MainView {
         this.evolutionFrame.add(selectionPanel);
     }
 
+    /**
+     * creates the buttons to be used for choosing from 3 different starter
+     * creatures
+     * 
+     * @param desc
+     *               the description on the button
+     * @param action
+     *               an ActionListener for the buttons when they may be pressed
+     */
     public void createStarterButton(String desc, ActionListener action) {
 
         JButton btn = new JButton(desc);
@@ -556,12 +626,26 @@ public class MainView {
         this.startFrame.revalidate();
     }
 
+    /**
+     * sets an evolution action event
+     * 
+     * @param evolve
+     *               action listener for the evolve action
+     * 
+     */
     public void setEvolutionActionEvent(ActionListener evolve) {
 
         this.evolveAction = evolve;
 
     }
 
+    /**
+     * method for displaying the current inventory of the player
+     * 
+     * @param creatureList
+     *                     the inventory of the player
+     * 
+     */
     public void reloadInventory(ArrayList<Creature> creatureList) {
 
         this.creatureListPanel.removeAll();
@@ -570,6 +654,13 @@ public class MainView {
 
     }
 
+    /**
+     * generates first list of creatures owned to choose from for evolution
+     * 
+     * @param creatureList
+     *                     the inventory of the player
+     * 
+     */
     public void generateCreatureEvolutionList1(ArrayList<Creature> creatureList) {
 
         for (int i = 0; i < creatureList.size(); i++) {
@@ -596,6 +687,13 @@ public class MainView {
 
     }
 
+    /**
+     * generates second list of creatures owned to choose from for evolution
+     * 
+     * @param creatureList
+     *                     the inventory of the player
+     * 
+     */
     public void generateCreatureEvolutionList2(ArrayList<Creature> creatureList) {
 
         for (int i = 0; i < creatureList.size(); i++) {
@@ -622,6 +720,13 @@ public class MainView {
 
     }
 
+    /**
+     * generates the list of creatures in the player's inventory
+     * 
+     * @param creatureList
+     *                     the inventory of the player
+     * 
+     */
     public void generateCreatureList(ArrayList<Creature> creatureList) {
 
         JLabel curActiveLbl = new JLabel("<html><h3>Currently Active</h3></html>");
@@ -666,6 +771,13 @@ public class MainView {
 
     }
 
+    /**
+     * assigns an open Inventory event
+     * 
+     * @param action
+     *               action listener for the inventory button
+     * 
+     */
     public void assignOpenInvEvent(ActionListener action) {
 
         this.inventoryBtn.addActionListener(action);

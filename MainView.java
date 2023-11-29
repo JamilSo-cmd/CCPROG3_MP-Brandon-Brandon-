@@ -110,6 +110,33 @@ public class MainView {
 
         this.chooseAreaFrame.setVisible(false);
 
+        this.area1Frame = new JFrame("Area 1");
+        this.area1Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.area1Frame.setLayout(new FlowLayout());
+        this.area1Frame.setSize(600, 600);
+        this.area1Frame.setLocationRelativeTo(null);
+        initializeArea(area1Frame, 1);
+
+        this.area1Frame.setVisible(false);
+
+        this.area2Frame = new JFrame("Area 2");
+        this.area2Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.area2Frame.setLayout(new FlowLayout());
+        this.area2Frame.setSize(600, 600);
+        this.area2Frame.setLocationRelativeTo(null);
+        initializeArea(area2Frame, 2);
+
+        this.area2Frame.setVisible(false);
+
+        this.area3Frame = new JFrame("Area 3");
+        this.area3Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.area3Frame.setLayout(new FlowLayout());
+        this.area3Frame.setSize(600, 600);
+        this.area3Frame.setLocationRelativeTo(null);
+        initializeArea(area3Frame, 3);
+
+        this.area3Frame.setVisible(false);
+
         this.evolutionFrame = new JFrame("Evolution");
         this.evolutionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.evolutionFrame.setLayout(new FlowLayout());
@@ -169,7 +196,7 @@ public class MainView {
                 inventoryFrame.setVisible(true);
             }
         });
-        this.chooseExploreBtn = new JButton("Explore an Area");
+        this.chooseExploreBtn = new JButton("Explore the Map");
         this.chooseExploreBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -280,6 +307,37 @@ public class MainView {
         mainPanel.add(area3Btn);
         mainPanel.add(returnBtn);
         this.chooseAreaFrame.add(mainPanel);
+    }
+
+    private void initializeArea(JFrame frame, int level) {
+        Area area = new Area(level);
+
+        int[][] tiles = area.getTiles();
+        int rows = area.getRows();
+        int columns = area.getColumns();
+
+        JPanel mainPanel = new JPanel(new GridLayout(rows, columns));
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                JLabel tile = new JLabel();
+                tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
+                mainPanel.add(tile);
+            }
+        }
+        JButton returnBtn = new JButton("Go Back to Map");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                chooseAreaFrame.setVisible(true);
+            }
+        });
+
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(mainPanel);
+        frame.revalidate();
+        frame.repaint();
     }
 
     public void initializeEncounterScreen() {

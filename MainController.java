@@ -22,6 +22,7 @@ public class MainController {
     private Creature creatureSelect1;
     private Creature creatureSelect2;
     private Creature enemyCreature;
+    private Area area;
     private int index1;
     private int index2;
     private String evolutionResult = "select two creatures";
@@ -236,6 +237,11 @@ public class MainController {
 
         return action;
     }
+
+    // private ActionListener moveUp(){}
+    // private ActionListener moveUp(){}
+    // private ActionListener moveUp(){}
+    // private ActionListener moveUp(){}
 
     private ActionListener switchCreatureEvent() {
         Player user1 = this.user;

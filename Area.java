@@ -41,26 +41,25 @@ public class Area {
      *                     represents the creatures that will be encountered in this
      *                     area
      */
-    public Area(int level, ArrayList<Creature> creaturelist) {
+    public Area(int level) {
         if (level == 1) {
             this.rows = 5;
             this.columns = 1;
-            this.creaturesList = creaturelist;
             area1();
         }
         // Area 2 and 3
-        /*
-         * else if (level == 2) {
-         * this.rows = 3;
-         * this.columns = 3;
-         * area2();
-         * 
-         * } else if (level == 3) {
-         * this.rows = 4;
-         * this.columns = 4;
-         * area3();
-         * }
-         */
+        
+        else if (level == 2) {
+        this.rows = 3;
+        this.columns = 3;
+        area2();
+        
+        } else if (level == 3) {
+        this.rows = 4;
+        this.columns = 4;
+        area3();
+        }
+        
     }
 
     /**

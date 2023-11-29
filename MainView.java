@@ -54,6 +54,15 @@ public class MainView {
     private JPanel resultPanel;
     private JLabel resultLbl;
     private JLabel selectImgLbl;
+    private ActionListener attackAction;
+    private JButton attackBtn;
+    private ActionListener catchAction;
+    private JButton catchBtn;
+    private JFrame swapFrame;
+    private ActionListener swapAction;
+    private JButton swapBtn;
+    private JPanel creatureSwapList;
+    private ActionListener swappingAction;
 
     public MainView() {
 
@@ -102,14 +111,24 @@ public class MainView {
         initializeEvolutionMenu();
         this.evolutionFrame.setVisible(false);
         
-        this.encounterFrame = new JFrame("Evolution");
+        this.encounterFrame = new JFrame("An Encounter Has Appeared!");
         this.encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.encounterFrame.setLayout(new FlowLayout());
-        this.encounterFrame.setSize(1500, 800);
+        this.encounterFrame.setSize(600, 400);
         this.encounterFrame.setLocationRelativeTo(null);
 
         initializeEncounterScreen();
         this.encounterFrame.setVisible(false);
+
+        this.swapFrame = new JFrame("Swap Creature");
+        this.swapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.swapFrame.setLayout(new FlowLayout());
+        this.swapFrame.setSize(600, 400);
+        this.swapFrame.setLocationRelativeTo(null);
+
+        initializeSwapScreen();
+        this.swapFrame.setVisible(false);
+
     }
 
     private void starterPick() {
@@ -142,13 +161,14 @@ public class MainView {
                 inventoryFrame.setVisible(true);
             }
         });
-        JButton exploreBtn = new JButton("Explore an Area");
-        exploreBtn.addActionListener(new ActionListener() {
+        this.exploreBtn = new JButton("Explore an Area");
+        this.exploreBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
-                encounterFrame.setVisible(true);
-                // replace frame with exploreframe
+                
+                // encounterFrame.setVisible(true); (for testing encounter)
+                // // replace frame with exploreframe
             }
         });
         this.evolveBtn = new JButton("Evolve a Creature");
@@ -179,12 +199,10 @@ public class MainView {
     }
 
     public void initializeInventory() {
-        JLabel text = new JLabel();
 
-        JPanel mainPanel = new JPanel(new GridLayout(2, 1));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 1));
 
         creatureListPanel = new JPanel(new GridLayout(0, 1));
-        JPanel options = new JPanel(new GridLayout(1, 1));
         // add options
         JButton returnBtn = new JButton("Exit Inventory");
         returnBtn.addActionListener(new ActionListener() {
@@ -195,11 +213,9 @@ public class MainView {
             }
         });
 
-        options.add(returnBtn);
-        mainPanel.add(options);
         mainPanel.add(creatureListPanel);
 
-        this.inventoryFrame.add(text);
+        this.inventoryFrame.add(returnBtn);
         this.inventoryFrame.add(mainPanel);
     }
 
@@ -225,20 +241,37 @@ public class MainView {
 
         }); 
 
-        JButton attackBtn = new JButton("Attack");
-        JButton swapBtn = new JButton("Swap");
-        JButton catchBtn = new JButton("Catch");
+        this.attackBtn = new JButton("Attack");
+        this.swapBtn = new JButton("Swap");
+        this.swapBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                encounterFrame.setVisible(false);
+                swapFrame.setVisible(true);
+            }
+        });
+
+        this.catchBtn = new JButton("Catch");
 
         encounterBtnPanel.add(attackBtn);
-        encounterBtnPanel.add(swapBtn);
+        encounterBtnPanel.add(this.swapBtn);
         encounterBtnPanel.add(catchBtn);
         encounterBtnPanel.add(returnBtn);
 
-        mainEncounterPanel.add(new JLabel("tested"));
+        mainEncounterPanel.add(statusPanel);
         mainEncounterPanel.add(encounterBtnPanel);
 
         this.encounterFrame.add(mainEncounterPanel);
 
+    }
+
+    private void initializeSwapScreen() {
+        JPanel mainPanel = new JPanel(new GridLayout(1, 1));
+
+        this.creatureSwapList = new JPanel(new GridLayout(0, 1));
+
+        mainPanel.add(this.creatureSwapList);
+        this.swapFrame.add(mainPanel);
     }
 
     public void initializeEvolutionMenu() {
@@ -473,6 +506,102 @@ public class MainView {
 
     }
 
+    public void reloadEncounter(Creature activeCreature, Creature enemy, boolean catchFlag, int timer){
+
+        this.statusPanel.removeAll();
+        JLabel selectImgLbl = new JLabel();
+        selectImgLbl.setIcon(this.createImageIcon(activeCreature.getImagePath(), "Active Creature"));
+        selectImgLbl.setHorizontalAlignment(JLabel.CENTER);
+        statusPanel.add(selectImgLbl);
+
+        JLabel enemyStat = new JLabel();
+
+        enemyStat.setText("<html><body>Name: " + enemy.getName()
+                    + "<br>Family: " + enemy.getFamily()
+                    + "<br>Evolution Lv: " + enemy.getEvolutionLv()
+                    + "<br>Current HP: " + enemy.getHealthPoints()
+                    + "<hr></html></body>");
+
+        this.statusPanel.add(enemyStat);
+        
+        JLabel enemyImg = new JLabel();
+        enemyImg.setIcon(this.createImageIcon(enemy.getImagePath(), "Enemy Creature"));
+        this.statusPanel.add(enemyImg);
+
+        this.attackBtn.removeActionListener(this.attackAction);
+        this.attackBtn.addActionListener(this.attackAction);
+
+        this.catchBtn.removeActionListener(this.catchAction);
+        this.catchBtn.addActionListener(this.catchAction);
+
+        this.swapBtn.removeActionListener(this.swapAction);
+        this.swapBtn.addActionListener(this.swapAction);
+
+        this.encounterFrame.revalidate();
+
+        if (enemy.getHealthPoints() <= 0 || catchFlag == true || timer <= 0){
+
+            this.menuFrame.setVisible(true);
+            this.encounterFrame.setVisible(false);
+
+        }
+    }
+
+    public void generateSwappingList (ArrayList<Creature> creatureList){
+
+        JLabel curActiveLbl = new JLabel("<html><h3>Currently Active</h3></html>");
+        JPanel activeCreaturePanel = new JPanel(new GridLayout(1, 3));
+        JLabel activeCreatureLbl = new JLabel();
+        Creature activeCurCreature = creatureList.get(0);
+        JLabel activeCreatureImgLbl = new JLabel();
+
+        activeCreatureImgLbl.setIcon(this.createImageIcon(activeCurCreature.getImagePath(), "test"));
+        activeCreatureLbl.setText("<html><body>Name: " + activeCurCreature.getName()
+                + "<br>Type: " + activeCurCreature.getType()
+                + "<br>Family: " + activeCurCreature.getFamily()
+                + "<br>Evolution Lv: " + activeCurCreature.getEvolutionLv()
+                + "<hr></html></body>");
+
+        activeCreaturePanel.add(curActiveLbl);
+        activeCreaturePanel.add(activeCreatureLbl);
+        activeCreaturePanel.add(activeCreatureImgLbl);
+        this.creatureListPanel.add(activeCreaturePanel);
+
+        for (int i = 1; i < creatureList.size(); i++) {
+            JButton switchBtn = new JButton("Set Active Creature");
+            switchBtn.putClientProperty("index", i);
+            switchBtn.addActionListener(this.swappingAction);
+            JPanel creaturePanel = new JPanel(new GridLayout(1, 3));
+            JLabel creatureLbl = new JLabel();
+            Creature curCreature = creatureList.get(i);
+            JLabel creatureImgLbl = new JLabel();
+
+            creatureImgLbl.setIcon(this.createImageIcon(curCreature.getImagePath(), "test"));
+            creatureLbl.setText("<html><body>Name: " + curCreature.getName()
+                    + "<br>Type: " + curCreature.getType()
+                    + "<br>Family: " + curCreature.getFamily()
+                    + "<br>Evolution Lv: " + curCreature.getEvolutionLv()
+                    + "<hr></html></body>");
+
+            creaturePanel.add(switchBtn);
+            creaturePanel.add(creatureLbl);
+            creaturePanel.add(creatureImgLbl);
+            this.creatureSwapList.add(creaturePanel);
+        }
+    }
+    public void reloadSwap (ArrayList<Creature> creatureList, boolean swapFlag){
+
+        this.creatureSwapList.removeAll();
+        this.generateSwappingList(creatureList);
+        this.swapFrame.revalidate();
+
+        if (swapFlag == true){
+            this.swapFrame.setVisible(false);
+            this.encounterFrame.setVisible(true);
+        }
+
+    }
+
     public void setSelectActionEvent1(ActionListener SelectAction) {
 
         this.selectAction1 = SelectAction;
@@ -489,5 +618,28 @@ public class MainView {
 
     }
 
+    public void setAttackActionEvent(ActionListener attack){
+
+        this.attackAction = attack;
+
+    }
     
+    public void setCatchActionEvent(ActionListener capture){
+
+        this.catchAction = capture;
+
+    }
+
+    public void assignSwapEvent(ActionListener swap){
+
+        this.swapAction = swap;
+
+    }
+
+    public void setSwappingActionEvent(ActionListener swapping){
+
+        this.swappingAction  = swapping;
+
+    }
+
 }

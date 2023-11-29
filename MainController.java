@@ -9,6 +9,7 @@
  */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -20,10 +21,14 @@ public class MainController {
     private MainView mainView;
     private Creature creatureSelect1;
     private Creature creatureSelect2;
+    private Creature enemyCreature;
     private int index1;
     private int index2;
     private String evolutionResult = "select two creatures";
-
+    private int atkValue;
+    private boolean catchFlag;
+    protected boolean swapFlag;
+    protected int timer;
 
     public MainController(){
 
@@ -48,9 +53,17 @@ public class MainController {
         this.mainView.setEvolutionActionEvent(evolutionEvent());
 
         this.mainView.assignStartEncounterEvent(startEncounterEvent());
-    }
+        
+        this.mainView.setAttackActionEvent(attackEvent());
 
-    private ActionListener startEncounterEvent() {
+        this.mainView.setCatchActionEvent(captureEvent());
+
+        this.mainView.assignSwapEvent(swapEvent());
+        
+        this.mainView.setSwappingActionEvent(swapCreatureEvent());
+    }   
+
+    private ActionListener swapCreatureEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
@@ -58,6 +71,100 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //actions to be performed when Encounter starts
+                user1.setActiveCreature((Integer)((JButton)e.getSource()).getClientProperty( "index" ));
+                swapFlag = true;
+                timer--;
+                curMainView.reloadSwap(user1.getPlayerInv().getRoster(), swapFlag);
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
+            }};
+        return action;
+    }
+
+    private ActionListener swapEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actions to be performed when Encounter starts
+                swapFlag = false;
+                curMainView.reloadSwap(user1.getPlayerInv().getRoster(),swapFlag);
+            }};
+        return action;
+    }
+
+    private ActionListener captureEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+       
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actions to be performed when Encounter starts
+
+                catchCreature();
+                timer--;
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag,timer);
+            }};
+        return action;
+    }
+
+    private void catchCreature() {
+        Player user1 = this.user;
+
+        int catchRate = (40+50) - enemyCreature.getHealthPoints();
+
+        if (user1.catchCreature() >= catchRate){
+
+            user1.addToInventory(enemyCreature);
+            this.catchFlag = true;
+
+        }
+
+    }
+
+    private ActionListener attackEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+       
+
+        ActionListener action = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actions to be performed when Encounter starts
+                computeAtk();
+                enemyCreature.takeDamage(atkValue);
+                timer--;
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag,timer);
+            }};
+        return action;
+    }
+
+    private void computeAtk(){
+        Player user1 = this.user;
+        
+        Creature ActiveCreature = user1.getActiveCreature();
+        boolean typeAdvantage = user1.getActiveCreature().typeAdvantage(ActiveCreature.getType(), enemyCreature.getType());
+        
+        this.atkValue = user1.getActiveCreature().attack(typeAdvantage);
+
+    }
+
+    private ActionListener startEncounterEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //actions to be performed when Encounter starts
+                enemyCreature = randomCreatureEL1();
+                timer = 3;
+                catchFlag = false;
+                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
             }};
         return action;
     }
@@ -92,6 +199,7 @@ public class MainController {
 
         return action;
     }
+
 
 
     private ActionListener openInvEvent () {
@@ -362,5 +470,221 @@ public class MainController {
             }
         }
 
+        
+    }
+
+    /**
+     * Returns a new Creature instance that is randomly chosen out of the possible
+     * creatures that exist
+     * 
+     * @return Creature
+     * 
+     * 
+     */
+    public static Creature randomCreatureEL1() {
+        Random rng = new Random();
+
+        String[] names = { "Strawander", "Chocowool", "Parfwit", "Brownisaur",
+                "Frubat", "Malts", "Squirpie", "Chocolite", "Oshacone" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Strawander".equals(randomName) || "Chocowool".equals(randomName) || "Parfwit".equals(randomName)) {
+            creatureType = "Fire";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('A') || families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                }
+                i++;
+            }
+
+        } else if ("Brownisaur".equals(randomName) || "Frubat".equals(randomName) || "Malts".equals(randomName)) {
+            creatureType = "Grass";
+
+            int i = 3;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                }
+                i++;
+            }
+
+        } else if ("Squirpie".equals(randomName) || "Chocolite".equals(randomName) || "Oshacone".equals(randomName)) {
+            creatureType = "Water";
+            
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('G')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                }
+                i++;
+            }
+        }
+
+        return new EL1(randomName, creatureType, creatureFamily, 1, creatureImagePath);
+    }
+
+    public static Creature randomCreatureEL2() {
+        Random rng = new Random();
+
+        String[] names = { "Strawleon", "Chocofluff", "Parfure", "Chocosaur",
+                "Golberry", "Kirlicake", "Tartortle", "Chocolish", "Dewice" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Strawleon".equals(randomName) || "Chocofluff".equals(randomName) || "Parfure".equals(randomName)) {
+            creatureType = "Fire";
+
+            
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                }
+                i++;
+            }
+
+        } else if ("Chocosaur".equals(randomName) || "Golberry".equals(randomName) || "Kirlicake".equals(randomName)) {
+            creatureType = "Grass";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                }
+                i++;
+            }
+
+        } else if ("Tartortle".equals(randomName) || "Chocolish".equals(randomName) || "Dewice".equals(randomName)) {
+            creatureType = "Water";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                }
+                i++;
+            }
+        }
+
+        return new EL2(randomName, creatureType, creatureFamily, 2, creatureImagePath);
+    }
+
+    public static Creature randomCreatureEL3() {
+        Random rng = new Random();
+
+        String[] names = { "Strawizard", "Candaros", "Parfelure", "Fudgasaur",
+                "Croberry", "Velvevoir", "Piestoise", "Icesundae", "Samurcone" };
+
+        char[] families = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
+
+        String creatureType = "";
+        char creatureFamily = '1';
+
+        String randomName = names[rng.nextInt(names.length)];
+
+        String creatureImagePath = "./resources/";
+        creatureImagePath += randomName;
+
+        if ("Strawizard".equals(randomName) || "Candaros".equals(randomName) || "Parfelure".equals(randomName)) {
+            creatureType = "Fire";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('C')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                }
+                i++;
+            }
+
+        } else if ("Fudgasaur".equals(randomName) || "Croberry".equals(randomName) || "Velvevoir".equals(randomName)) {
+            creatureType = "Grass";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+                    creatureImagePath += ".png";
+
+                }
+                i++;
+            }
+
+        } else if ("Piestoise".equals(randomName) || "Icesundae".equals(randomName) || "Samurcone".equals(randomName)) {
+            creatureType = "Water";
+
+            int i = 0;
+            while (i < names.length) {
+
+                if (randomName.equals(names[i])) {
+                    creatureFamily = families[i];
+
+                    if (families[i] == ('G')) {
+                        creatureImagePath += ".jpg";
+                    } else {
+                        creatureImagePath += ".png";
+                    }
+                }
+                i++;
+            }
+        }
+
+        return new EL3(randomName, creatureType, creatureFamily, 3, creatureImagePath);
     }
 }

@@ -52,12 +52,20 @@ public class MainView {
     private JButton area1Btn;
     private JButton area2Btn;
     private JButton area3Btn;
+    private JButton leftBtn;
+    private JButton rightBtn;
+    private JButton upBtn;
+    private JButton downBtn;
     private JButton exploreBtn;
     private JButton evolveBtn;
     private JButton evolutionBtn;
     private ActionListener switchAction;
     private ActionListener selectAction1;
     private ActionListener selectAction2;
+    private ActionListener leftAction;
+    private ActionListener rightAction;
+    private ActionListener upAction;
+    private ActionListener downAction;
     private ActionListener evolveAction;
     private JPanel evolutionPanel1;
     private JPanel evolutionPanel2;
@@ -338,16 +346,16 @@ public class MainView {
             }
         }
 
-        JButton leftBtn = new JButton("Move Left");
+        leftBtn = new JButton("Move Left");
         actionsPanel.add(leftBtn, BorderLayout.WEST);
 
-        JButton rightBtn = new JButton("Move Right");
+        rightBtn = new JButton("Move Right");
         actionsPanel.add(rightBtn, BorderLayout.EAST);
 
-        JButton upBtn = new JButton("Move Up");
+        upBtn = new JButton("Move Up");
         actionsPanel.add(upBtn, BorderLayout.NORTH);
 
-        JButton downBtn = new JButton("Move Down");
+        downBtn = new JButton("Move Down");
         actionsPanel.add(downBtn, BorderLayout.SOUTH);
 
         JButton returnBtn = new JButton("Go Back to Map");
@@ -368,6 +376,14 @@ public class MainView {
         frame.add(returnPanel);
         frame.revalidate();
         frame.repaint();
+    }
+
+    public void reloadArea(JFrame area, int level) {
+
+        area.removeAll();
+        this.initializeArea(area, level);
+        area.revalidate();
+
     }
 
     public void initializeEncounterScreen() {
@@ -750,6 +766,30 @@ public class MainView {
             this.swapFrame.setVisible(false);
             this.encounterFrame.setVisible(true);
         }
+
+    }
+
+    public void setLeftActionEvent(ActionListener moveLeft) {
+
+        this.leftAction = moveLeft;
+
+    }
+
+    public void setRightActionEvent(ActionListener moveRight) {
+
+        this.rightAction = moveRight;
+
+    }
+
+    public void setUpActionEvent(ActionListener moveUp) {
+
+        this.upAction = moveUp;
+
+    }
+
+    public void setDownActionEvent(ActionListener moveDown) {
+
+        this.downAction = moveDown;
 
     }
 

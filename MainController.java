@@ -25,6 +25,7 @@ public class MainController {
     private Area area;
     private int index1;
     private int index2;
+
     private String evolutionResult = "select two creatures";
     private int atkValue;
     private boolean catchFlag;
@@ -56,6 +57,14 @@ public class MainController {
 
         this.mainView.setSelectActionEvent2(selectCreatureEvent2());
 
+        this.mainView.setLeftActionEvent(moveLeftEvent());
+
+        this.mainView.setRightActionEvent(moveRightEvent());
+
+        this.mainView.setUpActionEvent(moveUpEvent());
+
+        this.mainView.setDownActionEvent(moveDownEvent());
+
         this.mainView.setEvolutionActionEvent(evolutionEvent());
 
         this.mainView.assignStartEncounterEvent(startEncounterEvent());
@@ -76,6 +85,63 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // actions to be performed when Encounter starts
+            }
+        };
+        return action;
+    }
+
+    private ActionListener moveLeftEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                user1.moveLeft();
+            }
+        };
+        return action;
+    }
+
+    private ActionListener moveRightEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                user1.moveRight();
+            }
+        };
+        return action;
+    }
+
+    private ActionListener moveUpEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                user1.moveUp();
+            }
+        };
+        return action;
+    }
+
+    private ActionListener moveDownEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                user1.moveDown();
+                curMainView.reloadArea(null, atkValue);
             }
         };
         return action;
@@ -237,11 +303,6 @@ public class MainController {
 
         return action;
     }
-
-    // private ActionListener moveUp(){}
-    // private ActionListener moveUp(){}
-    // private ActionListener moveUp(){}
-    // private ActionListener moveUp(){}
 
     private ActionListener switchCreatureEvent() {
         Player user1 = this.user;

@@ -1,13 +1,12 @@
 
 /**
  * <B>Area of the program<B>
- * @author Brandon Jaramillo Anthony  
+ * 
+ * @author Brandon Jaramillo Anthony
  * @author Brandon Jamil So
  * @version 1.0
  * 
  */
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Area {
     // attributes
@@ -24,22 +23,16 @@ public class Area {
      * Contains the number of tiles present
      */
     private int[][] tiles;
-    /**
-     * Contains the list of creatures
-     */
-    private ArrayList<Creature> creaturesList;
 
     // methods
     /**
      * sets the number of rows, columns and list of creatures based on the area
      * 
      * @param rows
-     *                     represents amount of rows in area
+     *               represents amount of rows in area
      * @param column
-     *                     represents amount of columns in area
-     * @param creatureList
-     *                     represents the creatures that will be encountered in this
-     *                     area
+     *               represents amount of columns in area
+     * 
      */
     public Area(int level) {
         if (level == 1) {
@@ -60,22 +53,6 @@ public class Area {
             area3();
         }
 
-    }
-
-    /**
-     * gets a randomly chosen wild creature from the creatureList
-     * 
-     * @param creaturesList
-     *                      represents all the creatures that can be encountered in
-     *                      this area
-     * 
-     * @return
-     *         a wild creature
-     */
-    public Creature getWildCreature() {
-        Random wild = new Random();
-        int randomIndex = wild.nextInt(creaturesList.size());
-        return creaturesList.get(randomIndex);
     }
 
     /**

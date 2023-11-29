@@ -16,7 +16,9 @@ import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
 
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 
 import javax.swing.JPanel;
@@ -318,13 +320,36 @@ public class MainView {
 
         JPanel mainPanel = new JPanel(new GridLayout(rows, columns));
 
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
+        JPanel actionsPanel = new JPanel(new BorderLayout());
+
+        JPanel returnPanel = new JPanel(new FlowLayout());
+
+        for (int y = 0; y < tiles.length; y++) {
+            for (int x = 0; x < tiles[y].length; x++) {
                 JLabel tile = new JLabel();
-                tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
+
+                if (x == 0 && y == 0) {
+                    tile.setIcon(this.createImageIcon("./resources/Player.png", "test"));
+                } else {
+                    tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
+                }
+
                 mainPanel.add(tile);
             }
         }
+
+        JButton leftBtn = new JButton("Move Left");
+        actionsPanel.add(leftBtn, BorderLayout.WEST);
+
+        JButton rightBtn = new JButton("Move Right");
+        actionsPanel.add(rightBtn, BorderLayout.EAST);
+
+        JButton upBtn = new JButton("Move Up");
+        actionsPanel.add(upBtn, BorderLayout.NORTH);
+
+        JButton downBtn = new JButton("Move Down");
+        actionsPanel.add(downBtn, BorderLayout.SOUTH);
+
         JButton returnBtn = new JButton("Go Back to Map");
         returnBtn.addActionListener(new ActionListener() {
             @Override
@@ -334,8 +359,13 @@ public class MainView {
             }
         });
 
+        frame.setLayout(new GridLayout(3, 1));
+
+        returnPanel.add(returnBtn);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(mainPanel);
+        frame.add(actionsPanel);
+        frame.add(returnPanel);
         frame.revalidate();
         frame.repaint();
     }

@@ -88,6 +88,8 @@ public class MainView {
     private ActionListener areaEvent;
     private JFrame selectAreaFrame;
     private int level;
+    private JButton runBtn;
+    private ActionListener runAction;
 
     public MainView() {
 
@@ -348,7 +350,7 @@ public class MainView {
         this.columns = curArea.getColumns();
 
         JPanel actionsPanel = new JPanel(new BorderLayout());
-        this.mainPanel = new JPanel(new GridLayout(0, 1));
+        this.mainPanel = new JPanel(new GridLayout( this.rows,  this.columns));
         JPanel returnPanel = new JPanel(new FlowLayout());
 
         this.leftBtn = new JButton("Move Left");
@@ -378,6 +380,10 @@ public class MainView {
         initialFrame.add(this.mainPanel);
         initialFrame.add(actionsPanel);
         initialFrame.add(returnPanel);
+    }
+
+    public void getArea (){
+        
     }
 
     public void reloadArea(boolean encounterFlag, int[][] playerPos,int level) {
@@ -415,7 +421,7 @@ public class MainView {
 
         }
 
-        // int[][] coordinate = ;
+        int[][] coordinate;
 
         this.mainPanel.removeAll();
 
@@ -423,7 +429,7 @@ public class MainView {
             for (int x = 0; x < this.tiles[y].length; x++) {
                 JLabel tile = new JLabel();
 
-                if (x == 0 && y == 0) {
+                if (playerPos[0][0] == x && playerPos[0][1]  == y) {
                     tile.setIcon(this.createImageIcon("./resources/Player.png", "test"));
                 } else {
                     tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
@@ -465,8 +471,8 @@ public class MainView {
         JPanel encounterBtnPanel = new JPanel(new GridLayout(1, 4));
         this.statusPanel = new JPanel(new GridLayout(1, 3));
 
-        JButton returnBtn = new JButton("Run Away");
-        returnBtn.addActionListener(new ActionListener() {
+        this.runBtn = new JButton("Run Away");
+        this.runBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 encounterFrame.setVisible(false);
@@ -490,7 +496,7 @@ public class MainView {
         encounterBtnPanel.add(attackBtn);
         encounterBtnPanel.add(this.swapBtn);
         encounterBtnPanel.add(catchBtn);
-        encounterBtnPanel.add(returnBtn);
+        encounterBtnPanel.add(this.runBtn);
 
         mainEncounterPanel.add(statusPanel);
         mainEncounterPanel.add(encounterBtnPanel);
@@ -764,6 +770,9 @@ public class MainView {
 
         this.swapBtn.removeActionListener(this.swapAction);
         this.swapBtn.addActionListener(this.swapAction);
+        
+        this.runBtn.removeActionListener(this.runAction);
+        this.runBtn.addActionListener(this.runAction);
 
         this.encounterFrame.revalidate();
 
@@ -773,6 +782,11 @@ public class MainView {
             this.encounterFrame.setVisible(false);
 
         }
+    }
+
+    public void setRunActionEvent (ActionListener run){
+        this.runAction = run;
+
     }
 
     public void generateSwappingList(ArrayList<Creature> creatureList) {

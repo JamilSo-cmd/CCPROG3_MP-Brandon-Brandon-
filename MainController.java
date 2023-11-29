@@ -76,6 +76,23 @@ public class MainController {
         this.mainView.assignOpenAreaEvent(assignOpenAreaEvent());
 
         this.mainView.assignChooseAreaEvent();
+
+        this.mainView.setRunActionEvent(runActionEvent());
+    }
+
+    private ActionListener runActionEvent() {
+        MainView curMainView = this.mainView;
+        Player user1 = this.user;
+
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // actions to be performed when Encounter starts
+                timer = 0;
+                encounterFlag = false;
+                curMainView.reloadEncounter(enemyCreature, enemyCreature, catchFlag, timer);
+        }};
+        return action;
     }
 
     private ActionListener assignOpenAreaEvent() {
@@ -86,6 +103,7 @@ public class MainController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // actions to be performed when Encounter starts
+                user1.resetPlayerPos();
                 int level = (Integer) ((JButton) e.getSource()).getClientProperty("level");
                 curMainView.reloadArea(encounterFlag,user1.getPlayerPos(),level);
             }
@@ -208,6 +226,9 @@ public class MainController {
                 user1.setActiveCreature((Integer) ((JButton) e.getSource()).getClientProperty("index"));
                 swapFlag = true;
                 timer--;
+                if (timer <= 0){
+                    encounterFlag = false;
+                }
                 curMainView.reloadSwap(user1.getPlayerInv().getRoster(), swapFlag);
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
             }
@@ -241,6 +262,9 @@ public class MainController {
 
                 catchCreature();
                 timer--;
+                if (timer <= 0){
+                    encounterFlag = false;
+                }
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
             }
         };
@@ -256,7 +280,7 @@ public class MainController {
 
             user1.addToInventory(enemyCreature);
             this.catchFlag = true;
-
+            this.encounterFlag = false;
         }
 
     }
@@ -271,7 +295,13 @@ public class MainController {
                 // actions to be performed when Encounter starts
                 computeAtk();
                 enemyCreature.takeDamage(atkValue);
+                if (enemyCreature.getHealthPoints() <= 0){
+                    encounterFlag = false;
+                }
                 timer--;
+                if (timer <= 0){
+                    encounterFlag = false;
+                }
                 curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
             }
         };

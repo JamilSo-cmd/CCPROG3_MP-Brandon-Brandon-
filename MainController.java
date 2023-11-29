@@ -22,7 +22,6 @@ public class MainController {
     private Creature creatureSelect1;
     private Creature creatureSelect2;
     private Creature enemyCreature;
-    private Area area;
     private int index1;
     private int index2;
 
@@ -31,6 +30,7 @@ public class MainController {
     private boolean catchFlag;
     protected boolean swapFlag;
     protected int timer;
+    private boolean encounterFlag = false;
 
     public MainController() {
 
@@ -51,8 +51,6 @@ public class MainController {
 
         this.mainView.assignOpenEvoEvent(openEvoEvent());
 
-        this.mainView.assignChooseAreaEvent(chooseAreaEvent());
-
         this.mainView.setSelectActionEvent1(selectCreatureEvent1());
 
         this.mainView.setSelectActionEvent2(selectCreatureEvent2());
@@ -67,8 +65,6 @@ public class MainController {
 
         this.mainView.setEvolutionActionEvent(evolutionEvent());
 
-        this.mainView.assignStartEncounterEvent(startEncounterEvent());
-
         this.mainView.setAttackActionEvent(attackEvent());
 
         this.mainView.setCatchActionEvent(captureEvent());
@@ -76,18 +72,64 @@ public class MainController {
         this.mainView.assignSwapEvent(swapEvent());
 
         this.mainView.setSwappingActionEvent(swapCreatureEvent());
+
+        this.mainView.assignOpenAreaEvent(assignOpenAreaEvent());
+
+        this.mainView.assignChooseAreaEvent();
     }
 
-    private ActionListener chooseAreaEvent() {
+    private ActionListener assignOpenAreaEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
+
         ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // actions to be performed when Encounter starts
+                int level = (Integer) ((JButton) e.getSource()).getClientProperty("level");
+                curMainView.reloadArea(encounterFlag,user1.getPlayerPos(),level);
             }
         };
         return action;
+    }
+
+    public void checkEncounterEvent(){
+
+        Random rng = new Random();
+
+        if (rng.nextInt(100) >= 40 ){
+            this.encounterFlag = true;
+            if(this.mainView.getLevel() == 1){
+                this.enemyCreature = randomCreatureEL1();
+            }
+            else if(this.mainView.getLevel() == 2){
+                int value = rng.nextInt(2);
+
+                if (value == 0){
+                    this.enemyCreature = randomCreatureEL1();
+                }
+                else if (value == 1){
+                    this.enemyCreature = randomCreatureEL2();
+                }
+            }
+            else if(this.mainView.getLevel() == 3){
+                int value = rng.nextInt(3);
+
+                if (value == 0){
+                    this.enemyCreature = randomCreatureEL1();
+                }
+                else if (value == 1){
+                    this.enemyCreature = randomCreatureEL2();
+                }
+                else if (value == 2){
+                    this.enemyCreature = randomCreatureEL3();
+                }
+            System.out.println(enemyCreature.getName() + " checking");
+            startEncounterEvent();
+
+            }
+        }
+
     }
 
     private ActionListener moveLeftEvent() {
@@ -99,6 +141,8 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
 
                 user1.moveLeft();
+                checkEncounterEvent();
+                curMainView.reloadArea(encounterFlag, user1.getPlayerPos());
             }
         };
         return action;
@@ -113,6 +157,8 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
 
                 user1.moveRight();
+                checkEncounterEvent();
+                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
             }
         };
         return action;
@@ -127,6 +173,9 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
 
                 user1.moveUp();
+                checkEncounterEvent();
+                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
+
             }
         };
         return action;
@@ -141,7 +190,8 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
 
                 user1.moveDown();
-                curMainView.reloadArea(null, atkValue);
+                checkEncounterEvent();
+                curMainView.reloadArea(encounterFlag,user1.getPlayerPos());
             }
         };
         return action;
@@ -239,22 +289,14 @@ public class MainController {
 
     }
 
-    private ActionListener startEncounterEvent() {
+    private void startEncounterEvent() {
         MainView curMainView = this.mainView;
         Player user1 = this.user;
 
-        ActionListener action = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // actions to be performed when Encounter starts
-                enemyCreature = randomCreatureEL1();
-                timer = 3;
-                catchFlag = false;
-                curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
-            }
-        };
-        return action;
+        this.timer = 3;
+        this.catchFlag = false;
+        curMainView.reloadEncounter(user1.getActiveCreature(), enemyCreature, catchFlag, timer);
+            
     }
 
     private ActionListener openEvoEvent() {
@@ -279,11 +321,6 @@ public class MainController {
             public void actionPerformed(ActionEvent e) {
                 user1.addToInventory(new EL1(name, type, family, evolutionLv, imagePath));
                 user1.setActiveCreature(0);
-
-                // TODO: Remove after testing
-                user1.addToInventory(new EL1("Squirpie", "Water", 'G', 1, "./resources/Squirpie.jpg"));
-                user1.addToInventory(new EL1("Strawander", "Fire", 'A', 1, "./resources/Strawander.jpg"));
-
             }
         };
 
@@ -393,7 +430,7 @@ public class MainController {
 
                 if (creatureSelect1.getEvolutionLv() >= 3 || creatureSelect2.getEvolutionLv() >= 3
                         || creatureSelect1.getEvolutionLv() != creatureSelect2.getEvolutionLv()) {
-                    evolutionResult = "Different Evolution Lv";
+                    evolutionResult = "Failure";
                 } else {
                     switch (creatureSelect1.getFamily()) {
 

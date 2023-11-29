@@ -81,6 +81,13 @@ public class MainView {
     private JButton swapBtn;
     private JPanel creatureSwapList;
     private ActionListener swappingAction;
+    private JPanel mainPanel;
+    private int[][]  tiles;
+    private int rows;
+    private int columns;
+    private ActionListener areaEvent;
+    private JFrame selectAreaFrame;
+    private int level;
 
     public MainView() {
 
@@ -125,7 +132,7 @@ public class MainView {
         this.area1Frame.setLayout(new FlowLayout());
         this.area1Frame.setSize(600, 600);
         this.area1Frame.setLocationRelativeTo(null);
-        initializeArea(area1Frame, 1);
+        initializeArea(1);
 
         this.area1Frame.setVisible(false);
 
@@ -134,7 +141,7 @@ public class MainView {
         this.area2Frame.setLayout(new FlowLayout());
         this.area2Frame.setSize(600, 600);
         this.area2Frame.setLocationRelativeTo(null);
-        initializeArea(area2Frame, 2);
+        initializeArea(2);
 
         this.area2Frame.setVisible(false);
 
@@ -143,7 +150,7 @@ public class MainView {
         this.area3Frame.setLayout(new FlowLayout());
         this.area3Frame.setSize(600, 600);
         this.area3Frame.setLocationRelativeTo(null);
-        initializeArea(area3Frame, 3);
+        initializeArea(3);
 
         this.area3Frame.setVisible(false);
 
@@ -212,9 +219,6 @@ public class MainView {
             public void actionPerformed(ActionEvent e) {
                 menuFrame.setVisible(false);
                 chooseAreaFrame.setVisible(true);
-
-                // encounterFrame.setVisible(true); (for testing encounter)
-                // // replace frame with exploreframe
             }
         });
         this.evolveBtn = new JButton("Evolve a Creature");
@@ -288,7 +292,6 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chooseAreaFrame.setVisible(false);
-                area1Frame.setVisible(true);
             }
         });
 
@@ -297,7 +300,6 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chooseAreaFrame.setVisible(false);
-                area2Frame.setVisible(true);
             }
         });
 
@@ -306,7 +308,6 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 chooseAreaFrame.setVisible(false);
-                area3Frame.setVisible(true);
             }
         });
 
@@ -319,21 +320,107 @@ public class MainView {
         this.chooseAreaFrame.add(mainPanel);
     }
 
-    private void initializeArea(JFrame frame, int level) {
-        Area area = new Area(level);
+    private void initializeArea(int level) {
 
-        int[][] tiles = area.getTiles();
-        int rows = area.getRows();
-        int columns = area.getColumns();
 
-        JPanel mainPanel = new JPanel(new GridLayout(rows, columns));
+        JFrame initialFrame;
+        
+        switch (level){
+            
+            case 1: initialFrame = this.area1Frame; 
+                    this.level = 1;
+            break;
+            case 2: initialFrame = this.area2Frame; 
+                    this.level = 2; 
+            break;
+            case 3: initialFrame = this.area3Frame; 
+                    this.level = 3; 
+            break;
+            default: initialFrame = this.area1Frame; 
+                    this.level = 1;
+
+        }
+
+        Area curArea = new Area(level);
+        
+        this.tiles = curArea.getTiles();
+        this.rows = curArea.getRows();
+        this.columns = curArea.getColumns();
 
         JPanel actionsPanel = new JPanel(new BorderLayout());
-
+        this.mainPanel = new JPanel(new GridLayout(0, 1));
         JPanel returnPanel = new JPanel(new FlowLayout());
 
-        for (int y = 0; y < tiles.length; y++) {
-            for (int x = 0; x < tiles[y].length; x++) {
+        this.leftBtn = new JButton("Move Left");
+        actionsPanel.add(leftBtn, BorderLayout.WEST);
+
+        this.rightBtn = new JButton("Move Right");
+        actionsPanel.add(rightBtn, BorderLayout.EAST);
+
+        this.upBtn = new JButton("Move Up");
+        actionsPanel.add(upBtn, BorderLayout.NORTH);
+
+        this.downBtn = new JButton("Move Down");
+        actionsPanel.add(downBtn, BorderLayout.SOUTH);
+
+        JButton returnBtn = new JButton("Go Back to Map");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                initialFrame.setVisible(false);
+                chooseAreaFrame.setVisible(true);
+            }
+        });
+
+        initialFrame.setLayout(new GridLayout(3, 1));
+
+        returnPanel.add(returnBtn);
+        initialFrame.add(this.mainPanel);
+        initialFrame.add(actionsPanel);
+        initialFrame.add(returnPanel);
+    }
+
+    public void reloadArea(boolean encounterFlag, int[][] playerPos,int level) {
+
+
+        System.out.println(level + "check");
+
+        switch (level){
+            
+            case 1: this.selectAreaFrame = this.area1Frame; 
+                    this.level = 1;
+            break;
+            case 2: this.selectAreaFrame = this.area2Frame; 
+                    this.level = 2; 
+            break;
+            case 3: this.selectAreaFrame = this.area3Frame; 
+                    this.level = 3; 
+            break;
+            default: this.selectAreaFrame = this.area1Frame; 
+                    this.level = 1;
+
+        }
+        this.selectAreaFrame.setVisible(true);
+
+        reloadArea(encounterFlag, playerPos);
+    }
+    
+
+    public void reloadArea(boolean encounterFlag, int[][] playerPos) {
+        
+        if (encounterFlag == true){
+
+            this.selectAreaFrame.setVisible(false);
+            this.encounterFrame.setVisible(true);
+
+        }
+
+        // int[][] coordinate = ;
+
+        this.mainPanel.removeAll();
+
+        for (int y = 0; y < this.tiles.length; y++) {
+            for (int x = 0; x < this.tiles[y].length; x++) {
                 JLabel tile = new JLabel();
 
                 if (x == 0 && y == 0) {
@@ -342,47 +429,33 @@ public class MainView {
                     tile.setIcon(this.createImageIcon("./resources/Grass.png", "test"));
                 }
 
-                mainPanel.add(tile);
+                this.mainPanel.add(tile);
             }
         }
 
-        leftBtn = new JButton("Move Left");
-        actionsPanel.add(leftBtn, BorderLayout.WEST);
+        this.rightBtn.removeActionListener(rightAction);
+        this.rightBtn.addActionListener(rightAction);
 
-        rightBtn = new JButton("Move Right");
-        actionsPanel.add(rightBtn, BorderLayout.EAST);
+        this.leftBtn.removeActionListener(leftAction);
+        this.leftBtn.addActionListener(leftAction);
 
-        upBtn = new JButton("Move Up");
-        actionsPanel.add(upBtn, BorderLayout.NORTH);
+        this.upBtn.removeActionListener(upAction);
+        this.upBtn.addActionListener(upAction);
+        
+        this.downBtn.removeActionListener(downAction);
+        this.downBtn.addActionListener(downAction);
 
-        downBtn = new JButton("Move Down");
-        actionsPanel.add(downBtn, BorderLayout.SOUTH);
+        this.selectAreaFrame.revalidate();
 
-        JButton returnBtn = new JButton("Go Back to Map");
-        returnBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                chooseAreaFrame.setVisible(true);
-            }
-        });
-
-        frame.setLayout(new GridLayout(3, 1));
-
-        returnPanel.add(returnBtn);
-        frame.getContentPane().removeAll();
-        frame.getContentPane().add(mainPanel);
-        frame.add(actionsPanel);
-        frame.add(returnPanel);
-        frame.revalidate();
-        frame.repaint();
+    }
+    
+    public int getLevel() {
+        return level;
     }
 
-    public void reloadArea(JFrame area, int level) {
+    public void assignOpenAreaEvent(ActionListener openArea){
 
-        area.removeAll();
-        this.initializeArea(area, level);
-        area.revalidate();
+        this.areaEvent = openArea;
 
     }
 
@@ -397,7 +470,7 @@ public class MainView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 encounterFrame.setVisible(false);
-                menuFrame.setVisible(true);
+                selectAreaFrame.setVisible(true);
             }
 
         });
@@ -623,17 +696,6 @@ public class MainView {
 
     }
 
-    public void assignChooseAreaEvent(ActionListener action) {
-        this.chooseExploreBtn.addActionListener(action);
-    }
-
-    // TODO: revise when area frame is done
-    public void assignStartEncounterEvent(ActionListener action) {
-
-        this.exploreBtn.addActionListener(action);
-
-    }
-
     public void reloadEvolution(ArrayList<Creature> creatureList, Creature selection1, Creature selection2,
             String evoResult) {
 
@@ -707,7 +769,7 @@ public class MainView {
 
         if (enemy.getHealthPoints() <= 0 || catchFlag == true || timer <= 0) {
 
-            this.menuFrame.setVisible(true);
+            this.selectAreaFrame.setVisible(true);
             this.encounterFrame.setVisible(false);
 
         }
@@ -833,4 +895,14 @@ public class MainView {
 
     }
 
+    public void assignChooseAreaEvent (){
+
+        this.area1Btn.putClientProperty("level", 1);
+        this.area1Btn.addActionListener(areaEvent);
+        this.area2Btn.putClientProperty("level", 2);
+        this.area2Btn.addActionListener(areaEvent);
+        this.area3Btn.putClientProperty("level", 3);
+        this.area3Btn.addActionListener(areaEvent);
+
+    }
 }

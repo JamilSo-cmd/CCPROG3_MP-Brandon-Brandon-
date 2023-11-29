@@ -29,7 +29,7 @@ public class Creature {
     /**
      * Represents the creature's health points
      */
-    private int healthPoints = 50;
+    private int healthPoints;
     /**
      * Represents the file path to the image of the creature
      */
@@ -54,6 +54,7 @@ public class Creature {
         this.family = family;
         this.evolutionLv = EL;
         this.imagePath = imagePath;
+        this.healthPoints = 50;
     }
 
 
